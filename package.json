@@ -1,8 +1,8 @@
 {
   "name": "ion-custom-form-builder",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Ronald Hove",
-  "homepage": "https://github.com/ronald-hove",
+  "homepage": "https://github.com/ronald-hove/ion-custom-form-builder",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
