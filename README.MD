@@ -55,11 +55,11 @@ Head over to your  *.page.ts file and add
 ```ts
 
   ...
-  import { FormFeild } from 'ion-custom-form-builder';
+  import { FormField } from 'ion-custom-form-builder';
   import { AbstractControl, Validators } from '@angular/forms';
   ...
 
-  fields: FormFeild[] = [];
+  fields: FormField[] = [];
   email: AbstractControl;
   password: AbstractControl;
 
@@ -103,7 +103,7 @@ export interface FormField {
     validators: Validators[]; // email regular expression validator is handled by the component logic 
     type: string;
     placeholder?: string;
-    formFeildType?: string; // Current version supports 'inline' and 'textarea'
+    FormFieldType?: string; // Current version supports 'inline' and 'textarea'
     textAreaRowCount?: number;
     errors?: boolean;
 }
