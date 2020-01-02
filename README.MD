@@ -12,7 +12,7 @@ Usage Example Output
 In your project root, run
 
 ```txt
-npm i ion-custom-form-builder
+npm i ion-custom-form-builder@latest
 ```
 
 # Usage Example
