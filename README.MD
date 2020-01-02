@@ -2,6 +2,11 @@
 
 This is an ionic-angular component library for building forms with the highlight of doing form validation so you don't have to.
 
+
+Usage Example Output
+
+![Xcode Preview Image 1](demo.gif)
+
 # Installation
 
 In your project root, run
@@ -86,11 +91,6 @@ Head over to your  *.page.ts file and add
   ...
 
 ```
-
-
-Output
-
-![Xcode Preview Image 1](demo.gif)
 
 
 # Advanced
