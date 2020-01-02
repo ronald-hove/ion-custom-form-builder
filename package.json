@@ -1,15 +1,21 @@
 {
   "name": "ion-custom-form-builder",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "Ronald Hove",
   "homepage": "https://github.com/ronald-hove/ion-custom-form-builder",
   "license": "MIT",
   "keywords": [
-    "form-builder",
+    "form builder",
     "ionic",
     "ionic4",
     "angular",
-    "ionic-form-builder"
+    "ionic form builder",
+    "typescript",
+    "javascript",
+    "builder",
+    "forms",
+    "form validation",
+    "validation"
   ],
   "repository": {
     "type": "git",
