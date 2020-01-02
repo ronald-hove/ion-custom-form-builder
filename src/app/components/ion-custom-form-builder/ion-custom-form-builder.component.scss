@@ -1,6 +1,14 @@
 .default-form-input {
-  border: 1px solid #4c4c4c;
+  border: 1px solid #007bff;
   border-radius: 0.5rem;
   margin-top: 16px;
   width: 80% !important;
+}
+
+.default-form-input-error {
+  border: 1px solid #dc3545;
+}
+
+.default-form-input-success {
+  border: 1px solid #28a745;
 }

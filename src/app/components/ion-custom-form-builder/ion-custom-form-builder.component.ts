@@ -114,8 +114,10 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     const classes = {};
     // tslint:disable-next-line: no-string-literal
     classes[this.defaultCssClass ? `${this.defaultCssClass}` : 'default-form-input'] = true;
-    classes[`${this.errorCssClass}`] = field.value.touched && field.value.errors || field.errors ? true : false;
-    classes[`${this.successCssClass}`] = !field.value.errors && !field.errors ? true : false;
+    // tslint:disable-next-line: max-line-length
+    classes[this.errorCssClass ? `${this.errorCssClass}` : 'default-form-input-error'] = field.value.touched && field.value.errors || field.errors ? true : false;
+    // tslint:disable-next-line: max-line-length
+    classes[this.successCssClass ? `${this.successCssClass}` : 'default-form-input-success'] = !field.value.errors && !field.errors ? true : false;
     return classes;
   }
 

@@ -93,7 +93,51 @@ Head over to your  *.page.ts file and add
 ```
 
 
-# Advanced
+# Css Styling
+
+By default the form builder component has the following css classes applied on Success or Error Validations
+
+```css
+.default-form-input {
+  border: 1px solid #007bff;
+  border-radius: 0.5rem;
+  margin-top: 16px;
+  width: 80%;
+}
+
+.default-form-input-error {
+  border: 1px solid #dc3545;
+}
+
+.default-form-input-success {
+  border: 1px solid #28a745;
+}
+```
+
+Inorder to get your own colors on Success or Error Validations, you can override the defaults by placing your css classes in the **global.scss** file
+
+**IMPORTANT**
+
+Use the folloing rules when you override the css classes 
+
+If you override the any of the classes, you have to include all the original class properties and set them as important 
+
+e.g
+```css
+.override-default-form-input{
+  border: 1px solid your_new_color !important;
+  border-radius: your_new_border_radius !important;
+  margin-top: your_new_border_margin !important;
+  width: your_new_border_width !important;
+}
+
+```
+
+For success and error classes, only override the border class property
+
+
+# You can apply the classes in one of two ways
+<h2>Method 1: add the classes as module configuration options</h2>
 
 ```ts
 ...
@@ -104,13 +148,29 @@ import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
   imports: [
     ...
     IonCustomFormBuilderModule.forRoot({
-      defaultCssClass: 'overide-default-form-input',
-      errorCssClass: 'form-error',
-      successCssClass: 'form-success'
+      defaultCssClass: 'override-default-form-input',
+      errorCssClass: 'override-default-form-error',
+      successCssClass: 'override-default-form-success'
     })
     ...
   ]
 })
+...
+```
 
+
+<h2>Method 2: Use component Inputs</h2>
+
+```html
+...
+  <ion-custom-form-builder
+    [formFields]="fields"
+    [submitButtonText]="'Submit'"
+    [defaultCssClass]="override-default-form-input'"
+    [errorCssClass]="'override-default-form-error'"
+    [successCssClass]="'override-default-form-success'"
+    (formSubmission)="submitForm($event)" 
+  >
+  </ion-custom-form-builder>
 ...
 ```
