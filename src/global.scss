@@ -26,17 +26,17 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-.form-default{
-    border: 1px solid blue !important ;
+.overide-default-form-input{
+    border: 1px solid var(--ion-color-primary) !important ;
     border-radius: 0.5rem;
     margin-top: 16px;
     width: 80% !important;
 }
 
 .form-error{
-    border: 1px solid red !important ;
+    border: 1px solid var(--ion-color-danger) !important ;
 }
 
 .form-success {
-    border: 1px solid green !important ;
+    border: 1px solid var(--ion-color-success) !important ;
 }

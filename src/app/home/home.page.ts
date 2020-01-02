@@ -9,8 +9,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
   forgotPasswordForm: FormFeild[] = [];
-
   email: AbstractControl;
+  password: AbstractControl;
 
   constructor() {
     this.forgotPasswordForm = [
@@ -22,7 +22,18 @@ export class HomePage {
         value: this.email,
         validators: [Validators.required]
       },
+      {
+        icon: 'lock',
+        type: 'password',
+        title: 'Password',
+        formControlName: 'password',
+        value: this.email,
+        validators: [Validators.required]
+      }
     ];
   }
 
+  submitForm(formData) {
+    console.log('FORM_DATA=,', formData);
+  }
 }

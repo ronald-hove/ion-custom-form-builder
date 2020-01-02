@@ -8,7 +8,11 @@ import { HomePage } from './home.page';
 
 @NgModule({
   imports: [
-    IonCustomFormBuilderModule.forRoot(),
+    IonCustomFormBuilderModule.forRoot({
+      defaultCssClass: 'overide-default-form-input',
+      errorCssClass: 'form-error',
+      successCssClass: 'form-success'
+    }),
     CommonModule,
     FormsModule,
     IonicModule,
