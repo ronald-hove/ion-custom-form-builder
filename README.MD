@@ -95,7 +95,7 @@ Head over to your  *.page.ts file and add
 The FormField interface has the following structure with some important notes
 
 ```ts
-export interface FormFeild {
+export interface FormField {
     icon: string; // Input field icon 
     title: string; // Input field title
     formControlName: string; // formControl name and value should be the same respective of their types

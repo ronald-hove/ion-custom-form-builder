@@ -1,6 +1,6 @@
 import { IonCustomFormBuilderConfig } from './config-options-interface';
 import { ION_CUSTOM_FORM_BUILDER_CONFIG } from './config-options.token';
-import { FormFeild } from './form-field-interface';
+import { FormField } from './form-field-interface';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, Inject } from '@angular/core';
 
@@ -17,7 +17,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   formBuilt = false;
   emailRegEx = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
 
-  @Input() formFields: FormFeild [] = [];
+  @Input() formFields: FormField [] = [];
   @Input() submitButtonText  = '';
   @Input() errorsIndex: [] = [];
   @Input() defaultCssClass = this.config ? this.config.defaultCssClass : undefined;
@@ -110,7 +110,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     return result.length !== 0;
   }
 
-  setCssClasses(field: FormFeild) {
+  setCssClasses(field: FormField) {
     const classes = {};
     // tslint:disable-next-line: no-string-literal
     classes[this.defaultCssClass ? `${this.defaultCssClass}` : 'default-form-input'] = true;

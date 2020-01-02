@@ -1,6 +1,6 @@
 import { AbstractControl, Validators } from '@angular/forms';
 
-export interface FormFeild {
+export interface FormField {
     icon: string;
     title: string;
     formControlName: string;
