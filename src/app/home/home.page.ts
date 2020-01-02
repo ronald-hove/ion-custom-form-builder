@@ -15,18 +15,18 @@ export class HomePage {
   constructor() {
     this.forgotPasswordForm = [
       {
-        icon: 'mail',
-        type: 'email',
-        title: 'Email',
-        formControlName: 'email',
+        icon: 'lock',
+        type: 'password',
+        title: 'Password',
+        formControlName: 'password',
         value: this.email,
         validators: [Validators.required]
       },
       {
         icon: 'lock',
         type: 'password',
-        title: 'Password',
-        formControlName: 'password',
+        title: 'Confirm Password',
+        formControlName: 'confirm_password',
         value: this.email,
         validators: [Validators.required]
       }

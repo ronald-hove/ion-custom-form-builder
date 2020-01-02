@@ -2,10 +2,18 @@
 
 This is an ionic-angular component library for building forms with the highlight of doing form validation so you don't have to.
 
+Features
+  - Email Validation
+  - Password Validation
+  - Set Success or Error Validation Colors
+  - Set errors to specific fields on network calls
+  - Inline Form Fields
+  - Text Area Form Fields
+  - Use Official Ionic Icons
 
 Usage Example Output
 
-![Xcode Preview Image 1](demo.gif)
+![Preview Image 1](demo.gif)
 
 # Installation
 
@@ -190,5 +198,131 @@ import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
     (formSubmission)="submitForm($event)" 
   >
   </ion-custom-form-builder>
+...
+```
+
+# **Advanced Features**
+
+  - Password Validation
+  - Set errors to specific fields on network calls
+
+# Working with passwords
+
+Usage Example2 Output
+
+![Preview Image 2](demo1.gif)
+
+The ion-form-builder component provides you with an elegant way to validate passwords by doing the following
+
+# Password Validation Usage Example
+
+Head over to your  *.page.ts file and add
+
+For this work you need to explicitly use **password** and **confirm_password** as your fromControlName & AbstractControl variable name
+
+```ts
+
+  ...
+  import { FormField } from 'ion-custom-form-builder';
+  import { AbstractControl, Validators } from '@angular/forms';
+  ...
+
+  fields: FormField[] = [];
+  password: AbstractControl;
+  confirm_password: AbstractControl;
+
+  constructor() {
+    this.fields = [
+      {
+        icon: 'lock',
+        type: 'password',
+        title: 'Password',
+        formControlName: 'password',
+        value: this.password,
+        validators: [Validators.required]
+      },
+      {
+        icon: 'lock',
+        type: 'password',
+        title: 'Confirm Password',
+        formControlName: 'confirm_password',
+        value: this.confirm_password,
+        validators: [Validators.required]
+      }
+    ];
+  }
+  ...
+
+```
+
+
+# Set Field Error on Network Callback
+
+<h2>Scenario</h2>
+
+Say you are working on a login form and you want to set errors to your form fields when the user has entered the incorrect credentials
+
+In your *.html file user the input **[errorsIndex]** that takes in an array of indices representing the index of the field to which you want to set an error
+
+
+```html
+  <ion-custom-form-builder
+    [formFields]="loginForm"
+    [submitButtonText]="'Login'"
+    (formSubmission)="doLogin($event)"
+    [errorsIndex]="loginErrors"
+  >
+  </ion-custom-form-builder>
+```
+
+In your *.ts file, lets assume you have some api that handles login.
+
+Init an array **loginErrors**
+
+When you encounter an error, say your api throws back a 401 error, you want to push the indices of the email and password fields into your **loginErrors** array
+
+the result will be the email and password applying the error css class notifying the user that something is wrong with the login credentials
+
+
+```ts
+...
+  loginForm: FormField[] = [];
+  email: AbstractControl;
+  password: AbstractControl;
+  loginErrors: any[] = [];
+...
+
+  constructor(
+    private api: HttpServiceProvider,
+  ) {
+    this.loginForm = [
+      {
+        icon: 'mail',
+        type: 'email',
+        title: 'Email',
+        formControlName: 'email',
+        value: this.email,
+        validators: [Validators.required]
+      },
+      {
+        icon: 'lock',
+        type: 'password',
+        title: 'Password',
+        formControlName: 'password',
+        value: this.email,
+        validators: [Validators.required]
+      }
+    ];
+  }
+
+  async doLogin(formData) {
+    this.api.login(formData).then( response => {
+      // Some success logic 
+    }).catch( error => {
+      // We know email and password fields are at index 0 and 1 respectively
+      this.loginErrors = [0, 1];
+      loader.dismiss();
+    });
+  }
 ...
 ```
