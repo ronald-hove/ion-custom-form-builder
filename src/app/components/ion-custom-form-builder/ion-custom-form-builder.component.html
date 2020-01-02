@@ -1,0 +1,51 @@
+<form
+  [formGroup]="customForm"
+  novalidate
+  *ngIf="formBuilt"
+  (ngSubmit)="submitForm()"
+>
+  <ion-row
+    justify-content-center
+    align-items-center
+    *ngFor="let field of formFields"
+  >
+    <ion-item
+      *ngIf="
+        field.formFeildType === 'inline' || field.formFeildType === undefined
+      "
+      lines="none"
+      [ngClass]="setCssClasses(field)"
+    >
+      <ion-icon slot="start" name="{{ field.icon }}" color="primary"></ion-icon>
+      <ion-label position="floating">{{ field.title }}</ion-label>
+      <ion-input
+        type="{{ field.type }}"
+        formControlName="{{ field.formControlName }}"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item
+      *ngIf="
+        field.formFeildType === 'textarea'
+      "
+      lines="none"
+      [ngClass]="setCssClasses(field)"
+    >
+      <ion-label position="floating">{{ field.title }}</ion-label>
+      <ion-textarea
+        rows="{{field?.textAreaRowCount}}"
+        formControlName="{{ field.formControlName }}"
+      ></ion-textarea>
+    </ion-item>
+  </ion-row>
+
+  <ion-row align-items-center justify-content-center margin-top>
+    <ion-button
+      color="primary"
+      type="submit"
+      [disabled]="getFormValidationErrors()"
+    >
+      {{ submitButtonText }}
+    </ion-button>
+  </ion-row>
+</form>

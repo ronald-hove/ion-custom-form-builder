@@ -1,3 +1,5 @@
+import { FormFeild } from './../components/ion-custom-form-builder/form-field-interface';
+import { AbstractControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,7 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  forgotPasswordForm: FormFeild[] = [];
 
-  constructor() {}
+  email: AbstractControl;
+
+  constructor() {
+    this.forgotPasswordForm = [
+      {
+        icon: 'mail',
+        type: 'email',
+        title: 'Email',
+        formControlName: 'email',
+        value: this.email,
+        validators: [Validators.required]
+      },
+    ];
+  }
 
 }
