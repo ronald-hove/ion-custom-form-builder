@@ -92,6 +92,24 @@ Head over to your  *.page.ts file and add
 
 ```
 
+The FormField interface has the following structure with some important notes
+
+```ts
+export interface FormFeild {
+    icon: string; // Input field icon 
+    title: string; // Input field title
+    formControlName: string; // formControl name and value should be the same respective of their types
+    value: AbstractControl;
+    validators: Validators[]; // email regular expression validator is handled by the component logic 
+    type: string;
+    placeholder?: string;
+    formFeildType?: string; // Current version supports 'inline' and 'textarea'
+    textAreaRowCount?: number;
+    errors?: boolean;
+}
+
+```
+
 
 # Css Styling
 
@@ -114,11 +132,11 @@ By default the form builder component has the following css classes applied on S
 }
 ```
 
-Inorder to get your own colors on Success or Error Validations, you can override the defaults by placing your css classes in the **global.scss** file
+In order to get your own colors on Success or Error Validations, you can override the defaults by placing your css classes in the **global.scss** file
 
 **IMPORTANT**
 
-Use the folloing rules when you override the css classes 
+Use the following rules when you override the css classes 
 
 If you override the any of the classes, you have to include all the original class properties and set them as important 
 
@@ -136,7 +154,7 @@ e.g
 For success and error classes, only override the border class property
 
 
-# You can apply the classes in one of two ways
+# Applying Css Styling
 <h2>Method 1: add the classes as module configuration options</h2>
 
 ```ts
