@@ -18,7 +18,7 @@ import the module in your top level *.module.ts file
 
 ```ts
 ...
-import { IonCustomFormBuilderModule } from 'node-modules/ion-custom-form-builder';
+import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
 ...
 
 @NgModule({
@@ -32,13 +32,72 @@ import { IonCustomFormBuilderModule } from 'node-modules/ion-custom-form-builder
 ...
 ```
 
+Now in your *.page.html file add
+
+```html
+...
+  <ion-custom-form-builder
+    [formFields]="fields"
+    [submitButtonText]="'Submit'"
+    (formSubmission)="submitForm($event)" 
+  >
+  </ion-custom-form-builder>
+...
+```
+
+Head over to your  *.page.ts file and add
+
+```ts
+
+  ...
+  import { FormFeild } from 'ion-custom-form-builder';
+  import { AbstractControl, Validators } from '@angular/forms';
+  ...
+
+  fields: FormFeild[] = [];
+  email: AbstractControl;
+  password: AbstractControl;
+
+  constructor() {
+    this.fields = [
+      {
+        icon: 'mail',
+        type: 'email',
+        title: 'Email',
+        formControlName: 'email',
+        value: this.email,
+        validators: [Validators.required]
+      },
+      {
+        icon: 'lock',
+        type: 'password',
+        title: 'Password',
+        formControlName: 'password',
+        value: this.email,
+        validators: [Validators.required]
+      }
+    ];
+  }
+
+  submitForm(formData) {
+    console.log('FORM_DATA=,', formData);
+  }
+
+  ...
+
+```
+
+
+Output
+
+![Xcode Preview Image 1](demo.gif)
 
 
 # Advanced
 
 ```ts
 ...
-import { IonCustomFormBuilderModule } from 'node-modules/ion-custom-form-builder';
+import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
 ...
 
 @NgModule({
