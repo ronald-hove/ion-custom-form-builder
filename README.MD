@@ -262,7 +262,7 @@ For this work you need to explicitly use **password** and **confirm_password** a
 
 Say you are working on a login form and you want to set errors to your form fields when the user has entered the incorrect credentials
 
-In your *.html file user the input **[errorsIndex]** that takes in an array of indices representing the index of the field to which you want to set an error
+In your *.html file use the input **[errorsIndex]** that takes in an array of indices representing the index of the field to which you want to set an error
 
 
 ```html
