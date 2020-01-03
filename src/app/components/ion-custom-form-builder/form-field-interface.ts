@@ -8,7 +8,7 @@ export interface FormField {
     validators: Validators[];
     type: string;
     placeholder?: string;
-    formFeildType?: string;
+    formFieldType?: string;
     textAreaRowCount?: number;
     errors?: boolean;
 }

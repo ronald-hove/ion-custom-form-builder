@@ -11,7 +11,7 @@
   >
     <ion-item
       *ngIf="
-        field.formFeildType === 'inline' || field.formFeildType === undefined
+        field.formFieldType === 'inline' || field.formFieldType === undefined
       "
       lines="none"
       [ngClass]="setCssClasses(field)"
@@ -26,7 +26,7 @@
 
     <ion-item
       *ngIf="
-        field.formFeildType === 'textarea'
+        field.formFieldType === 'textarea'
       "
       lines="none"
       [ngClass]="setCssClasses(field)"
