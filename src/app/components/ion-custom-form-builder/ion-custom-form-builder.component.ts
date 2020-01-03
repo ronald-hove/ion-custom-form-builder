@@ -17,6 +17,8 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   formBuilt = false;
   emailRegEx = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
 
+  masks: any;
+
   @Input() formFields: FormField [] = [];
   @Input() submitButtonText  = '';
   @Input() errorsIndex: [] = [];
@@ -29,7 +31,11 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     @Inject(ION_CUSTOM_FORM_BUILDER_CONFIG) private config: IonCustomFormBuilderConfig
   ) {
-
+    this.masks = {
+      cardExpiry: [/[0-1]/, /\d/, '/', /[1-9]/, /\d/],
+      cardNumber: [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
+      dateAutoCorrected: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+    };
    }
 
   ngOnChanges() {

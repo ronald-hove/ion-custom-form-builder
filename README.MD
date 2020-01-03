@@ -2,7 +2,7 @@
 
 This is an ionic-angular component library for building forms with the highlight of doing form validation so you don't have to.
 
-Features
+Features (Current Version)
   - Email Validation
   - Password Validation
   - Set Success or Error Validation Colors
@@ -11,7 +11,16 @@ Features
   - Text Area Form Fields
   - Use Official Ionic Icons
 
-Usage Example Output
+Upcoming Features
+  - Credit Card Validation (With support for detecting card type)
+  - Credit Card Expiration Validation
+  - Date Validation With Auto Correction
+  - Radio and Checkbox support 
+  - Dropdowns (Ion Select support)
+  - Toggle buttons
+
+
+# Usage Example Output
 
 ![Preview Image 1](demo.gif)
 
@@ -208,7 +217,7 @@ import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
 
 # Working with passwords
 
-Usage Example2 Output
+**Usage Example2 Output**
 
 ![Preview Image 2](demo1.gif)
 
