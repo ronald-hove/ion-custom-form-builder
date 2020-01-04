@@ -4,8 +4,6 @@ import { FormField } from './form-field-interface';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, Inject } from '@angular/core';
 import * as  payform from 'payform';
-import { element } from 'protractor';
-
 
 @Component({
   selector: 'ion-custom-form-builder',
@@ -88,22 +86,29 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
 
     if (this.creditCardFieldIndex !== undefined) {
       this.formFields[this.creditCardFieldIndex].control.valueChanges.subscribe (cardNumber => {
-        if (payform.validateCardNumber(cardNumber) === false) {
-          this.formFields[this.creditCardFieldIndex].errors = true;
-        } else {
-          this.formFields[this.creditCardFieldIndex].errors = false;
-        }
-
-        if (payform.parseCardType(cardNumber) === 'visa') {
-          this.creditCardImg = 'visa.svg';
-        } else if (payform.parseCardType(cardNumber) === 'amex') {
-          this.creditCardImg = 'amex.svg';
-        } else if (payform.parseCardType(cardNumber) === 'mastercard') {
-          this.creditCardImg = 'master.svg';
-        } else {
-          this.creditCardImg = 'generic.svg';
-        }
+        this.validateCardNumber(cardNumber);
+        this.detectCardType(cardNumber);
       });
+    }
+  }
+
+  private validateCardNumber(cardNumber: any) {
+    if (payform.validateCardNumber(cardNumber) === false) {
+      this.formFields[this.creditCardFieldIndex].errors = true;
+    } else {
+      this.formFields[this.creditCardFieldIndex].errors = false;
+    }
+  }
+
+  private detectCardType(cardNumber: any) {
+    if (payform.parseCardType(cardNumber) === 'visa') {
+      this.creditCardImg = 'visa.svg';
+    } else if (payform.parseCardType(cardNumber) === 'amex') {
+      this.creditCardImg = 'amex.svg';
+    } else if (payform.parseCardType(cardNumber) === 'mastercard') {
+      this.creditCardImg = 'master.svg';
+    } else {
+      this.creditCardImg = 'generic.svg';
     }
   }
 

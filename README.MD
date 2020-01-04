@@ -11,6 +11,7 @@ This is an ionic-angular component library for building forms with the highlight
 Features (Current Version)
   - Email Validation
   - Password Validation
+  - Credit Card Validation (With support for detecting card type)
   - Set Success or Error Validation Colors
   - Set errors to specific fields on network calls
   - Inline Form Fields
@@ -18,7 +19,6 @@ Features (Current Version)
   - Use Official Ionic Icons
 
 Upcoming Features
-  - Credit Card Validation (With support for detecting card type)
   - Credit Card Expiration Validation
   - Date Validation With Auto Correction
   - Radio and Checkbox support 
@@ -93,7 +93,7 @@ Head over to your  *.page.ts file and add
         type: 'email',
         title: 'Email',
         formControlName: 'email',
-        value: this.email,
+        control: this.email,
         validators: [Validators.required]
       },
       {
@@ -101,7 +101,7 @@ Head over to your  *.page.ts file and add
         type: 'password',
         title: 'Password',
         formControlName: 'password',
-        value: this.email,
+        control: this.email,
         validators: [Validators.required]
       }
     ];
@@ -125,31 +125,37 @@ The FormField interface has the following structure with some important notes
 *
 * formControlName: Used to identify the field by angular form builder
 *
-* value: Form field controller holds form input data
+* control: Form field controller holds form input data
 *
 * validators: An array of validators ie [Validators.required, Validators.minLength(10) . . ] full list of form validators in angular docs
 *
 * type: i.e <input type="text"> | support 'email', 'number', 'password', 'text', 'tel'
 *
-* placeholder: Preset form field value
+* placeholder: form field placeholder
+*
+* formFieldValue: preset formField value
 *
 * formFieldType: Current version supports 'inline' and 'textarea'
 *
 * textAreaRowCount: The height in rows if formFieldType === 'textarea'
 *
 * errors: A boolean for whether or not form field has additional errors apart from validation errors i.e errors applied on a network callback
+*
+* labelPosition: supported => 'floating', 'stacked', 'fixed'
 */
 export interface FormField {
-    icon: string; 
+    icon?: string;
     title: string;
-    formControlName: string; 
-    value: AbstractControl;
+    formControlName: string;
+    control: AbstractControl;
     validators: Validators[];
     type: string;
     placeholder?: string;
-    FormFieldType?: string;
+    formFieldValue?: string;
+    formFieldType?: string;
     textAreaRowCount?: number;
     errors?: boolean;
+    labelPosition?: string;
 }
 
 ```
@@ -279,7 +285,7 @@ For this work you need to explicitly use **password** and **confirm_password** a
         type: 'password',
         title: 'Password',
         formControlName: 'password',
-        value: this.password,
+        control: this.password,
         validators: [Validators.required]
       },
       {
@@ -287,7 +293,7 @@ For this work you need to explicitly use **password** and **confirm_password** a
         type: 'password',
         title: 'Confirm Password',
         formControlName: 'confirm_password',
-        value: this.confirm_password,
+        control: this.confirm_password,
         validators: [Validators.required]
       }
     ];
@@ -344,7 +350,7 @@ the result will be the email and password applying the error css class notifying
         type: 'email',
         title: 'Email',
         formControlName: 'email',
-        value: this.email,
+        control: this.email,
         validators: [Validators.required]
       },
       {
@@ -352,7 +358,7 @@ the result will be the email and password applying the error css class notifying
         type: 'password',
         title: 'Password',
         formControlName: 'password',
-        value: this.email,
+        control: this.email,
         validators: [Validators.required]
       }
     ];
