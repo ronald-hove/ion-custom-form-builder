@@ -24,14 +24,14 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   @Input() formFields: FormField [] = [];
   @Input() submitButtonText  = '';
   @Input() errorsIndex: [] = [];
-  @Input() defaultCssClass = this.config.defaultCssClass ? this.config.defaultCssClass : undefined;
-  @Input() successCssClass = this.config.successCssClass ? this.config.successCssClass : undefined;
-  @Input() errorCssClass = this.config.errorCssClass ? this.config.errorCssClass : undefined;
+  @Input() defaultCssClass = this.config ? this.config.defaultCssClass : undefined;
+  @Input() successCssClass = this.config ? this.config.successCssClass : undefined;
+  @Input() errorCssClass = this.config ? this.config.errorCssClass : undefined;
   @Input() showLabels = true;
   @Input() showIcons = true;
   @Input() showCardIcons = true;
   /* supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary' */
-  @Input() iconColor: string = this.config.defaultIconColor ? this.config.defaultIconColor : undefined;
+  @Input() iconColor: string = this.config ? this.config.defaultIconColor : undefined;
   @Output() formSubmission: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
