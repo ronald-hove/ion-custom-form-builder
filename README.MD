@@ -315,7 +315,7 @@ ion-custom-form-builder comes with the ability to validate credit cards thanks t
 
 **IMPORTANT**
 
-First you need to add the following to your angular.json file, this will map library's
+First you need to add the following in the assets array of your angular.json file, this will map library's
 assets to your project assets folder
 
 
@@ -323,22 +323,16 @@ assets to your project assets folder
   ...
   "architect": {
     "build": {
-      ...
       "options": {
-        ...
         "assets": [
-          ...
           {
             "glob": "**/*",
             "input": "node_modules/ion-custom-form-builder/src/assets",
             "output": "assets"
           }
         ]
-        ...
       }
-      ...
     }
-    ...
   }
   ...
 ```
