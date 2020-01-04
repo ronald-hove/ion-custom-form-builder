@@ -34,7 +34,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     this.masks = {
       cardExpiry: [/[0-1]/, /\d/, '/', /[1-9]/, /\d/],
       cardNumber: [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
-      dateAutoCorrected: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
+      dateAutoCorrect: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]
     };
    }
 

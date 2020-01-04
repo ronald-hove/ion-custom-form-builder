@@ -112,21 +112,41 @@ Head over to your  *.page.ts file and add
 The FormField interface has the following structure with some important notes
 
 ```ts
+/*
+* icon: ion-icon name
+*
+* title: Form field label
+*
+* formControlName: Used to identify the field by angular form builder
+*
+* value: Form field controller holds form input data
+*
+* validators: An array of validators ie [Validators.required, Validators.minLength(10) . . ] full list of form validators in angular docs
+*
+* type: i.e <input type="text"> | support 'email', 'number', 'password'
+*
+* placeholder: Preset form field value
+*
+* formFieldType: Current version supports 'inline' and 'textarea'
+*
+* textAreaRowCount: The height in rows if formFieldType === 'textarea'
+*
+* errors: A boolean for whether or not form field has additional errors apart from validation errors i.e errors applied on a network callback
+*/
 export interface FormField {
-    icon: string; // Input field icon 
-    title: string; // Input field title
-    formControlName: string; // formControl name and value should be the same respective of their types
+    icon: string; 
+    title: string;
+    formControlName: string; 
     value: AbstractControl;
-    validators: Validators[]; // email regular expression validator is handled by the component logic 
+    validators: Validators[];
     type: string;
     placeholder?: string;
-    FormFieldType?: string; // Current version supports 'inline' and 'textarea'
+    FormFieldType?: string;
     textAreaRowCount?: number;
     errors?: boolean;
 }
 
 ```
-
 
 # Css Styling
 
@@ -155,7 +175,7 @@ In order to get your own colors on Success or Error Validations, you can overrid
 
 Use the following rules when you override the css classes 
 
-If you override the any of the classes, you have to include all the original class properties and set them as important 
+If you override any of the classes, you have to include all the original class properties and set them as important 
 
 e.g
 ```css
@@ -169,6 +189,12 @@ e.g
 ```
 
 For success and error classes, only override the border class property
+
+**NOTE**
+
+You can use your own custom made css that does not follow the above structure to style the form fields since internally the DOM structure is made up of official ion-components.
+
+In that case you do not have to override the defaults ,simply pass in your own custom css class name using one of the **applying Css methods** below
 
 
 # Applying Css Styling
@@ -217,7 +243,7 @@ import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
 
 # Working with passwords
 
-**Usage Example2 Output**
+**Usage Example Output**
 
 ![Preview Image 2](demo1.gif)
 
@@ -275,6 +301,7 @@ In your *.html file use the input **[errorsIndex]** that takes in an array of in
 
 
 ```html
+...
   <ion-custom-form-builder
     [formFields]="loginForm"
     [submitButtonText]="'Login'"
@@ -282,6 +309,7 @@ In your *.html file use the input **[errorsIndex]** that takes in an array of in
     [errorsIndex]="loginErrors"
   >
   </ion-custom-form-builder>
+...
 ```
 
 In your *.ts file, lets assume you have some api that handles login.
@@ -324,11 +352,12 @@ the result will be the email and password applying the error css class notifying
     ];
   }
 
-  async doLogin(formData) {
+  doLogin(formData) {
     this.api.login(formData).then( response => {
       // Some success logic 
     }).catch( error => {
-      // We know email and password fields are at index 0 and 1 respectively
+      // We know email and password fields are at index 0 and 1 respectively for the purpose of this example
+      // You could have some intelligent logic to determine fields to which you want errors applied 
       this.loginErrors = [0, 1];
       loader.dismiss();
     });
