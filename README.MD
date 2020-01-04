@@ -276,7 +276,7 @@ For this work you need to explicitly use **password** and **confirm_password** a
   ...
 
   fields: FormField[] = [];
-  password: AbstractControl;x
+  password: AbstractControl;
   confirm_password: AbstractControl;
 
   constructor() {
