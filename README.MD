@@ -10,10 +10,10 @@ This is an ionic-angular component library for building forms with the highlight
 
 Features (Current Version)
   - [Email Validation](#usage-example)
-  - [Password Validation](#password-validation-usage-example)
+  - [Password Validation](#working-with-passwords)
   - [Credit Card Validation (With support for detecting card type)](#credit-card-validation)
   - [Set Success or Error Validation Colors](#css-styling)
-  - [Set errors to specific fields](#Set-Field-Error-on-Network-Callback)
+  - [Set errors to specific fields](#Set-errors-to-specific-fields)
   - Inline Form Fields
   - Text Area Form Fields
   - Use Official Ionic Icons
@@ -339,7 +339,7 @@ in your *.page.ts file , create a **FormField** array object with a **formFieldT
 
 
 
-# Set Field Error on Network Callback
+# Set Errors to Specific Fields
 
 <h2>Scenario</h2>
 
