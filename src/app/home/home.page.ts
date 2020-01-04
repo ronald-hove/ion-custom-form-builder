@@ -15,13 +15,14 @@ export class HomePage {
   constructor() {
     this.fields = [
       {
-        type: 'tel',
-        title: 'Card Number',
-        formControlName: 'card',
-        control: this.card,
+        icon: 'mail',
+        type: 'text',
+        title: ' Number',
+        formControlName: 'tg',
+        control: this.password,
         validators: [Validators.required],
-        formFieldType: 'card',
-        labelPosition: 'stacked'
+        formFieldType: 'inline',
+        labelPosition: 'floating'
       }
     ];
   }

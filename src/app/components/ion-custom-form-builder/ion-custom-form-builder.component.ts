@@ -16,7 +16,6 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   formControls: any = {};
   formBuilt = false;
   emailRegEx = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
-
   masks: any;
 
   creditCardFieldIndex: number;
@@ -29,6 +28,8 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   @Input() successCssClass = this.config ? this.config.successCssClass : undefined;
   @Input() errorCssClass = this.config ? this.config.errorCssClass : undefined;
   @Input() showLabels = true;
+  @Input() showIcons = true;
+  @Input() showCardIcons = true;
   @Output() formSubmission: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(

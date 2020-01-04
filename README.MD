@@ -276,7 +276,7 @@ For this work you need to explicitly use **password** and **confirm_password** a
   ...
 
   fields: FormField[] = [];
-  password: AbstractControl;
+  password: AbstractControl;x
   confirm_password: AbstractControl;
 
   constructor() {
@@ -313,8 +313,37 @@ ion-custom-form-builder comes with the ability to validate credit cards thanks t
 
 # Credit Card Validation Usage Example
 
-in your *.page.ts file , create a **FormField** array object with a **formFieldType** of **'card'**
+**IMPORTANT**
 
+First you need to add the following to your angular.json file, this will map library's
+assets to your project assets folder
+
+
+```json
+  ...
+  "architect": {
+    "build": {
+      ...
+      "options": {
+        ...
+        "assets": [
+          ...
+          {
+            "glob": "**/*",
+            "input": "node_modules/ion-custom-form-builder/src/assets",
+            "output": "assets"
+          }
+        ]
+        ...
+      }
+      ...
+    }
+    ...
+  }
+  ...
+```
+
+in your *.page.ts file , create a **FormField** array object with a **formFieldType** of **'card'**
 
 ```ts
 ...
@@ -337,7 +366,11 @@ in your *.page.ts file , create a **FormField** array object with a **formFieldT
 ...
 ```
 
+Serve your app again to see the changes
 
+```txt
+  ionic serve
+```
 
 # Set Errors to Specific Fields
 

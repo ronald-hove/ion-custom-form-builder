@@ -1,6 +1,6 @@
 {
   "name": "ion-custom-form-builder",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "Ronald Hove",
   "homepage": "https://github.com/ronald-hove/ion-custom-form-builder",
   "license": "MIT",
@@ -46,7 +46,6 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "core-js": "^2.5.4",
-    "jquery": "^3.4.1",
     "payform": "^1.4.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",

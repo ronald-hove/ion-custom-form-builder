@@ -9,6 +9,7 @@
     align-items-center
     *ngFor="let field of formFields"
   >
+    <!-- Inline Text field controller -->
     <ion-item
       *ngIf="
         field.formFieldType === 'inline' || field.formFieldType === undefined
@@ -16,8 +17,8 @@
       lines="none"
       [ngClass]="setCssClasses(field)"
     >
-      <ion-icon slot="start" name="{{ field.icon }}" color="primary"></ion-icon>
-      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
+      <ion-icon slot="start" name="{{ field.icon }}" color="primary" *ngIf="showIcons"></ion-icon>
+      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
       <ion-input
         mode="md"
         placeholder="{{field?.placeholder}}"
@@ -26,6 +27,7 @@
       ></ion-input>
     </ion-item>
 
+    <!-- Credit card field controller -->
     <ion-item
       *ngIf="
         field.formFieldType === 'card'
@@ -34,10 +36,11 @@
       [ngClass]="setCssClasses(field)"
     >
       <div
+        *ngIf="showCardIcons"
         slot="start"
         [ngStyle]="createCardIcon(creditCardImg)"
       ></div>
-      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
+      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
       <ion-input
         mode="md"
         type="{{ field.type }}"
@@ -46,12 +49,13 @@
       ></ion-input>
     </ion-item>
 
+    <!-- Text Area Controller -->
     <ion-item
       *ngIf="field.formFieldType === 'textarea'"
       lines="none"
       [ngClass]="setCssClasses(field)"
     >
-      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
+      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
       <ion-textarea
         mode="md"
         rows="{{ field?.textAreaRowCount }}"
@@ -61,6 +65,7 @@
     </ion-item>
   </ion-row>
 
+  <!-- Submit Button -->
   <ion-row align-items-center justify-content-center margin-top>
     <ion-button
       color="primary"
