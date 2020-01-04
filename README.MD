@@ -2,6 +2,12 @@
 
 This is an ionic-angular component library for building forms with the highlight of doing form validation so you don't have to.
 
+[![NPM version](https://img.shields.io/npm/v/ion-custom-form-builder.svg?style=flat)](https://www.npmjs.org/package/ion-custom-form-builder)
+![npm bundle size](https://img.shields.io/bundlephobia/min/ion-custom-form-builder)
+![NPM](https://img.shields.io/npm/l/ion-custom-form-builder)
+![GitHub issues](https://img.shields.io/github/issues/ronald-hove/ion-custom-form-builder)
+![npm](https://img.shields.io/npm/dw/ion-custom-form-builder)
+
 Features (Current Version)
   - Email Validation
   - Password Validation
@@ -123,7 +129,7 @@ The FormField interface has the following structure with some important notes
 *
 * validators: An array of validators ie [Validators.required, Validators.minLength(10) . . ] full list of form validators in angular docs
 *
-* type: i.e <input type="text"> | support 'email', 'number', 'password'
+* type: i.e <input type="text"> | support 'email', 'number', 'password', 'text', 'tel'
 *
 * placeholder: Preset form field value
 *
