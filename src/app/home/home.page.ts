@@ -15,10 +15,19 @@ export class HomePage {
   constructor() {
     this.fields = [
       {
-        icon: 'mail',
-        type: 'text',
-        title: ' Number',
-        formControlName: 'tg',
+        type: 'number',
+        title: 'Card Number',
+        formControlName: 'card',
+        control: this.card,
+        validators: [Validators.required],
+        formFieldType: 'card',
+        labelPosition: 'floating'
+      },
+      {
+        icon: 'lock',
+        type: 'password',
+        title: ' Password',
+        formControlName: 'password',
         control: this.password,
         validators: [Validators.required],
         formFieldType: 'inline',
