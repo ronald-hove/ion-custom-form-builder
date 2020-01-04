@@ -9,11 +9,11 @@ This is an ionic-angular component library for building forms with the highlight
 ![npm](https://img.shields.io/npm/dw/ion-custom-form-builder)
 
 Features (Current Version)
-  - Email Validation
-  - Password Validation
-  - Credit Card Validation (With support for detecting card type)
-  - Set Success or Error Validation Colors
-  - Set errors to specific fields on network calls
+  - [Email Validation](#usage-example)
+  - [Password Validation](#password-validation-usage-example)
+  - [Credit Card Validation (With support for detecting card type)](#credit-card-validation)
+  - [Set Success or Error Validation Colors](#css-styling)
+  - [Set errors to specific fields](#Set-Field-Error-on-Network-Callback)
   - Inline Form Fields
   - Text Area Form Fields
   - Use Official Ionic Icons
@@ -252,6 +252,7 @@ import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
 
   - Password Validation
   - Set errors to specific fields on network calls
+  - Credit Card Validation
 
 # Working with passwords
 
@@ -301,6 +302,41 @@ For this work you need to explicitly use **password** and **confirm_password** a
   ...
 
 ```
+
+# Credit Card Validation
+
+ion-custom-form-builder comes with the ability to validate credit cards thanks to [Payform Library](https://github.com/jondavidjohn/payform)
+
+**Usage Example Output**
+
+![Preview Image 3](demo2.gif)
+
+# Credit Card Validation Usage Example
+
+in your *.page.ts file , create a **FormField** array object with a **formFieldType** of **'card'**
+
+
+```ts
+...
+  fields: FormField[] = [];
+  card: AbstractControl;
+
+  constructor() {
+    this.fields = [
+      {
+        type: 'number',
+        title: 'Card Number',
+        formControlName: 'card',
+        control: this.card,
+        validators: [Validators.required],
+        formFieldType: 'card',
+        labelPosition: 'stacked'
+      }
+    ];
+  }
+...
+```
+
 
 
 # Set Field Error on Network Callback
