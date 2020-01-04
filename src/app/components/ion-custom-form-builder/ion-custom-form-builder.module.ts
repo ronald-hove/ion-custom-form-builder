@@ -18,7 +18,7 @@ const Components = [
     IonicModule,
     CommonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
 ],
   exports: [
     Components

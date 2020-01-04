@@ -3,6 +3,8 @@ import { ION_CUSTOM_FORM_BUILDER_CONFIG } from './config-options.token';
 import { FormField } from './form-field-interface';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, Inject } from '@angular/core';
+import * as  payform from 'payform';
+import { element } from 'protractor';
 
 
 @Component({
@@ -19,12 +21,16 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
 
   masks: any;
 
+  creditCardFieldIndex: number;
+  creditCardImg = 'generic.svg';
+
   @Input() formFields: FormField [] = [];
   @Input() submitButtonText  = '';
   @Input() errorsIndex: [] = [];
   @Input() defaultCssClass = this.config ? this.config.defaultCssClass : undefined;
   @Input() successCssClass = this.config ? this.config.successCssClass : undefined;
   @Input() errorCssClass = this.config ? this.config.errorCssClass : undefined;
+  @Input() showLabels = true;
   @Output() formSubmission: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -57,10 +63,14 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
 
     // tslint:disable-next-line: no-shadowed-variable
     this.formFields.forEach((element, index, arr) => {
-      this.formFields[index].value = this.customForm.controls[`${element.formControlName}`];
+      this.formFields[index].control = this.customForm.controls[`${element.formControlName}`];
       if (element.placeholder !== undefined) {
-        this.formFields[index].value.setValue(element.placeholder);
-        this.formFields[index].value.markAsTouched();
+        this.formFields[index].control.setValue(element.formFieldValue);
+        this.formFields[index].control.markAsTouched();
+      }
+
+      if (element.formFieldType === 'card') {
+        this.creditCardFieldIndex = index;
       }
     });
 
@@ -75,12 +85,44 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
         }
       });
     });
+
+    if (this.creditCardFieldIndex !== undefined) {
+      this.formFields[this.creditCardFieldIndex].control.valueChanges.subscribe (cardNumber => {
+        if (payform.validateCardNumber(cardNumber) === false) {
+          this.formFields[this.creditCardFieldIndex].errors = true;
+        } else {
+          this.formFields[this.creditCardFieldIndex].errors = false;
+        }
+
+        if (payform.parseCardType(cardNumber) === 'visa') {
+          this.creditCardImg = 'visa.svg';
+        } else if (payform.parseCardType(cardNumber) === 'amex') {
+          this.creditCardImg = 'amex.svg';
+        } else if (payform.parseCardType(cardNumber) === 'mastercard') {
+          this.creditCardImg = 'master.svg';
+        } else {
+          this.creditCardImg = 'generic.svg';
+        }
+      });
+    }
+  }
+
+  createCardIcon(icon) {
+    const iconUrl = `assets/${icon}`;
+    return {
+      // tslint:disable-next-line: object-literal-key-quotes
+      'width': '14%',
+      'margin-top': icon === 'master.svg' ? '10px' : '5px',
+      'margin-right': '12px',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'content': `url(${iconUrl})`
+    };
   }
 
 
   private handlePasswords(passwordIndex: number, confirmPasswordIndex: number) {
-    if (this.formFields[passwordIndex].value.value.length > 0 &&
-      this.formFields[passwordIndex].value.value !== this.formFields[confirmPasswordIndex].value.value) {
+    if (this.formFields[passwordIndex].control.value.length > 0 &&
+      this.formFields[passwordIndex].control.value !== this.formFields[confirmPasswordIndex].control.value) {
       this.formFields[passwordIndex].title = this.formFields[confirmPasswordIndex].title = 'Passwords don\'t match';
       this.formFields[passwordIndex].errors = this.formFields[confirmPasswordIndex].errors = true;
     } else {
@@ -94,7 +136,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     const formData = {};
     // tslint:disable-next-line: no-shadowed-variable
     this.formFields.forEach((element, index, arr) => {
-      formData[`${element.formControlName}`]  = this.formFields[index].value.value;
+      formData[`${element.formControlName}`]  = this.formFields[index].control.value;
     });
     if (formData.hasOwnProperty('confirm_password')) {
       // tslint:disable-next-line: no-string-literal
@@ -108,12 +150,19 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     Object.keys(this.customForm.controls).forEach(key => {
       controlErrors.push(this.customForm.get(key).errors);
     });
-
     // tslint:disable-next-line: no-shadowed-variable
     const result = controlErrors.filter((element, index, arr) => {
       return element !== null;
     });
-    return result.length !== 0;
+    return result.length !== 0 ;
+  }
+
+  getFieldErrors() {
+    // tslint:disable-next-line: no-shadowed-variable
+    const fieldErrors = this.formFields.filter((element, index, arr) => {
+      return element.errors !== true;
+    });
+    return fieldErrors.length === 0;
   }
 
   setCssClasses(field: FormField) {
@@ -121,9 +170,9 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     // tslint:disable-next-line: no-string-literal
     classes[this.defaultCssClass ? `${this.defaultCssClass}` : 'default-form-input'] = true;
     // tslint:disable-next-line: max-line-length
-    classes[this.errorCssClass ? `${this.errorCssClass}` : 'default-form-input-error'] = field.value.touched && field.value.errors || field.errors ? true : false;
+    classes[this.errorCssClass ? `${this.errorCssClass}` : 'default-form-input-error'] = field.control.touched && field.control.errors || field.errors ? true : false;
     // tslint:disable-next-line: max-line-length
-    classes[this.successCssClass ? `${this.successCssClass}` : 'default-form-input-success'] = !field.value.errors && !field.errors ? true : false;
+    classes[this.successCssClass ? `${this.successCssClass}` : 'default-form-input-success'] = !field.control.errors && !field.errors ? true : false;
     return classes;
   }
 

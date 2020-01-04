@@ -17,8 +17,10 @@
       [ngClass]="setCssClasses(field)"
     >
       <ion-icon slot="start" name="{{ field.icon }}" color="primary"></ion-icon>
-      <ion-label position="floating">{{ field.title }}</ion-label>
+      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
       <ion-input
+        mode="md"
+        placeholder="{{field?.placeholder}}"
         type="{{ field.type }}"
         formControlName="{{ field.formControlName }}"
       ></ion-input>
@@ -26,15 +28,35 @@
 
     <ion-item
       *ngIf="
-        field.formFieldType === 'textarea'
+        field.formFieldType === 'card'
       "
       lines="none"
       [ngClass]="setCssClasses(field)"
     >
-      <ion-label position="floating">{{ field.title }}</ion-label>
-      <ion-textarea
-        rows="{{field?.textAreaRowCount}}"
+      <div
+        slot="start"
+        [ngStyle]="createCardIcon(creditCardImg)"
+      ></div>
+      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
+      <ion-input
+        mode="md"
+        type="{{ field.type }}"
         formControlName="{{ field.formControlName }}"
+        placeholder="{{field?.placeholder}}"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item
+      *ngIf="field.formFieldType === 'textarea'"
+      lines="none"
+      [ngClass]="setCssClasses(field)"
+    >
+      <ion-label *ngIf="showLabels" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}">{{ field.title }}</ion-label>
+      <ion-textarea
+        mode="md"
+        rows="{{ field?.textAreaRowCount }}"
+        formControlName="{{ field.formControlName }}"
+        placeholder="{{field?.placeholder}}"
       ></ion-textarea>
     </ion-item>
   </ion-row>
@@ -43,7 +65,7 @@
     <ion-button
       color="primary"
       type="submit"
-      [disabled]="getFormValidationErrors()"
+      [disabled]="getFormValidationErrors() || getFieldErrors()"
     >
       {{ submitButtonText }}
     </ion-button>

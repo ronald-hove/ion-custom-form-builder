@@ -8,8 +8,9 @@
 
 <ion-content>
   <ion-custom-form-builder
-    [formFields]="forgotPasswordForm"
+    [formFields]="fields"
     [submitButtonText]="'Submit'"
+    [showLabels]="true"
     (formSubmission)="submitForm($event)" 
   >
   </ion-custom-form-builder

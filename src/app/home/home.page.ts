@@ -8,27 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  forgotPasswordForm: FormField[] = [];
-  email: AbstractControl;
+  fields: FormField[] = [];
+  card: AbstractControl;
   password: AbstractControl;
 
   constructor() {
-    this.forgotPasswordForm = [
+    this.fields = [
       {
-        icon: 'lock',
-        type: 'password',
-        title: 'Password',
-        formControlName: 'password',
-        value: this.email,
-        validators: [Validators.required]
-      },
-      {
-        icon: 'lock',
-        type: 'password',
-        title: 'Confirm Password',
-        formControlName: 'confirm_password',
-        value: this.email,
-        validators: [Validators.required]
+        type: 'tel',
+        title: 'Card Number',
+        formControlName: 'card',
+        control: this.card,
+        validators: [Validators.required],
+        formFieldType: 'card',
+        labelPosition: 'stacked'
       }
     ];
   }
