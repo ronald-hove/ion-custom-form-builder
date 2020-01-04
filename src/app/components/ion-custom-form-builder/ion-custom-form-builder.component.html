@@ -17,7 +17,7 @@
       lines="none"
       [ngClass]="setCssClasses(field)"
     >
-      <ion-icon slot="start" name="{{ field.icon }}" color="primary" *ngIf="showIcons"></ion-icon>
+      <ion-icon slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
       <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
       <ion-input
         *ngIf="field?.placeholder"
