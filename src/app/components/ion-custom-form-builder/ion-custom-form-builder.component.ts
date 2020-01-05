@@ -116,7 +116,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     }
   }
 
-  private createCardIcon(icon) {
+  createCardIcon(icon) {
     const iconUrl = `assets/${icon}`;
     return {
       // tslint:disable-next-line: object-literal-key-quotes
@@ -154,7 +154,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     this.formSubmission.emit(formData);
   }
 
-  private hasValidationErrors() {
+  hasValidationErrors() {
     const controlErrors: ValidationErrors[] = [];
     Object.keys(this.customForm.controls).forEach(key => {
       controlErrors.push(this.customForm.get(key).errors);
@@ -166,7 +166,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     return result.length !== 0 ;
   }
 
-  private hasFieldErrors() {
+  hasFieldErrors() {
     // tslint:disable-next-line: no-shadowed-variable
     const fieldErrors = this.formFields.filter((element, index, arr) => {
       return element.errors === true;
@@ -174,7 +174,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     return fieldErrors.length !== 0;
   }
 
-  private setCssClasses(field: FormField) {
+  setCssClasses(field: FormField) {
     const classes = {};
     // tslint:disable-next-line: no-string-literal
     classes[this.defaultCssClass ? `${this.defaultCssClass}` : 'default-form-input'] = true;
