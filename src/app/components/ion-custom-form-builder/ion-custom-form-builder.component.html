@@ -89,9 +89,9 @@
   <!-- Submit Button -->
   <ion-row align-items-center justify-content-center margin-top>
     <ion-button
-      color="primary"
+      color="{{submitButtonColor ? submitButtonColor : 'primary'}}"
       type="submit"
-      [disabled]="getFormValidationErrors() || getFieldErrors()"
+      [disabled]="hasValidationErrors() || hasFieldErrors()"
     >
       {{ submitButtonText }}
     </ion-button>

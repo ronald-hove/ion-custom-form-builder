@@ -10,7 +10,9 @@ import { Component } from '@angular/core';
 export class HomePage {
   fields: FormField[] = [];
   card: AbstractControl;
-  password: AbstractControl;
+  name: AbstractControl;
+  expiry: AbstractControl;
+  cvv: AbstractControl;
 
   constructor() {
     this.fields = [
@@ -24,11 +26,31 @@ export class HomePage {
         labelPosition: 'floating'
       },
       {
+        icon: 'person',
+        type: 'text',
+        title: 'Name on Card',
+        formControlName: 'name',
+        control: this.name,
+        validators: [Validators.required],
+        formFieldType: 'inline',
+        labelPosition: 'floating'
+      },
+      {
+        icon: 'calendar',
+        type: 'number',
+        title: 'Card Expiry',
+        formControlName: 'expiry',
+        control: this.expiry,
+        validators: [Validators.required],
+        formFieldType: 'inline',
+        labelPosition: 'floating'
+      },
+      {
         icon: 'lock',
-        type: 'password',
-        title: ' Password',
-        formControlName: 'password',
-        control: this.password,
+        type: 'number',
+        title: 'CVV',
+        formControlName: 'cvv',
+        control: this.cvv,
         validators: [Validators.required],
         formFieldType: 'inline',
         labelPosition: 'floating'

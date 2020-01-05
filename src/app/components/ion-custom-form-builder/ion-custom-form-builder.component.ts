@@ -22,7 +22,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   creditCardImg = 'generic.svg';
 
   @Input() formFields: FormField [] = [];
-  @Input() submitButtonText  = '';
+  @Input() submitButtonText  = 'Submit';
   @Input() errorsIndex: [] = [];
   @Input() defaultCssClass = this.config ? this.config.defaultCssClass : undefined;
   @Input() successCssClass = this.config ? this.config.successCssClass : undefined;
@@ -32,6 +32,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   @Input() showCardIcons = true;
   /* supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary' */
   @Input() iconColor: string = this.config ? this.config.defaultIconColor : undefined;
+  @Input() submitButtonColor: string = this.config ? this.config.submitButtonColor : undefined;
   @Output() formSubmission: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -115,7 +116,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     }
   }
 
-  createCardIcon(icon) {
+  private createCardIcon(icon) {
     const iconUrl = `assets/${icon}`;
     return {
       // tslint:disable-next-line: object-literal-key-quotes
@@ -153,7 +154,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     this.formSubmission.emit(formData);
   }
 
-  getFormValidationErrors() {
+  private hasValidationErrors() {
     const controlErrors: ValidationErrors[] = [];
     Object.keys(this.customForm.controls).forEach(key => {
       controlErrors.push(this.customForm.get(key).errors);
@@ -165,15 +166,15 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     return result.length !== 0 ;
   }
 
-  getFieldErrors() {
+  private hasFieldErrors() {
     // tslint:disable-next-line: no-shadowed-variable
     const fieldErrors = this.formFields.filter((element, index, arr) => {
-      return element.errors !== true;
+      return element.errors === true;
     });
-    return fieldErrors.length === 0;
+    return fieldErrors.length !== 0;
   }
 
-  setCssClasses(field: FormField) {
+  private setCssClasses(field: FormField) {
     const classes = {};
     // tslint:disable-next-line: no-string-literal
     classes[this.defaultCssClass ? `${this.defaultCssClass}` : 'default-form-input'] = true;
