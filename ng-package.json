@@ -4,6 +4,6 @@
       "entryFile": "public_api.ts"
     },
     "whitelistedNonPeerDependencies": [
-      "."
+      "payform"
     ]
   }

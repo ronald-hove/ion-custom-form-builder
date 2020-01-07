@@ -28,3 +28,76 @@ task copySrcFilesToDistFolder {
         }
     }
 }
+
+
+task copyBuildPackageJsonFile {
+    doFirst {
+        logger.lifecycle "deleCurrentPackageJsonFile"
+        delete "$project.projectDir/package.json"
+    }
+    doLast {
+        logger.lifecycle "copyBuildPackageJsonFile"
+        copy {
+            from "$project.projectDir/packageJsonFiles/build.package.json"
+            into "$project.projectDir"
+            logger.lifecycle "renameBuildPackageJsonFile"
+            rename 'build.package.json', 'package.json'
+        }
+
+    }
+
+}
+
+
+task copyDevPackageJsonFile {
+    doFirst {
+        logger.lifecycle "deleCurrentPackageJsonFile"
+        delete "$project.projectDir/package.json"
+    }
+    doLast {
+        logger.lifecycle "copyDevPackageJsonFile"
+        copy {
+            from "$project.projectDir/packageJsonFiles/dev.package.json"
+            into "$project.projectDir"
+            logger.lifecycle "renameDevPackageJsonFile"
+            rename 'dev.package.json', 'package.json'
+        }
+
+    }
+}
+
+// Only Run After npm publish
+task updateBuildPackageJsonFile {
+    doFirst {
+        logger.lifecycle "deleCurrentBuildPackageJsonFile"
+        delete "$project.projectDir/packageJsonFiles/build.package.json"
+    }
+    doLast {
+        logger.lifecycle "copyToBuildPackageJsonFiles_Build"
+        copy {
+            from "$project.projectDir/package.json"
+            into "$project.projectDir/packageJsonFiles"
+            logger.lifecycle "renameBuildPackageJsonFile"
+            rename 'package.json', 'build.package.json'
+        }
+
+    }
+}
+
+// Only Run In development when active package.json file is dev.package.json
+task updateDevPackageJsonFile {
+    doFirst {
+        logger.lifecycle "deleCurrentDevPackageJsonFile"
+        delete "$project.projectDir/packageJsonFiles/dev.package.json"
+    }
+    doLast {
+        logger.lifecycle "copyToBuildPackageJsonFiles_Dev"
+        copy {
+            from "$project.projectDir/package.json"
+            into "$project.projectDir/packageJsonFiles"
+            logger.lifecycle "renameBuildPackageJsonFile"
+            rename 'package.json', 'dev.package.json'
+        }
+
+    }
+}
