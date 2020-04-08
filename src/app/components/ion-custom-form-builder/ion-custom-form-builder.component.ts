@@ -30,6 +30,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
   @Input() showLabels = true;
   @Input() showIcons = true;
   @Input() showCardIcons = true;
+  @Input() returnCreditCardType = false;
   /* supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary' */
   @Input() iconColor: string = this.config ? this.config.defaultIconColor : undefined;
   @Input() submitButtonColor: string = this.config ? this.config.submitButtonColor : undefined;
@@ -150,6 +151,14 @@ export class IonCustomFormBuilderComponent implements OnInit, OnChanges {
     if (formData.hasOwnProperty('confirm_password')) {
       // tslint:disable-next-line: no-string-literal
       delete formData['confirm_password'];
+    }
+    let detectCardFormFieldArr: FormField[] = [];
+    detectCardFormFieldArr = this.formFields.filter((element, index, arr) => {
+      return element.formFieldType === 'card';
+    });
+    if (detectCardFormFieldArr.length > 0 && this.returnCreditCardType === true) {
+      // tslint:disable-next-line: no-string-literal
+      formData['card_type'] = payform.parseCardType(formData['card']);
     }
     this.formSubmission.emit(formData);
   }
