@@ -46,7 +46,7 @@ export class HomePage {
         labelPosition: 'floating'
       },
       {
-        icon: 'lock',
+        icon: 'lock-closed',
         type: 'number',
         title: 'CVV',
         formControlName: 'cvv',

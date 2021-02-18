@@ -10,11 +10,7 @@ import { IonCustomFormBuilderModule } from './../components/ion-custom-form-buil
 
 @NgModule({
   imports: [
-    IonCustomFormBuilderModule.forRoot({
-      defaultCssClass: 'override-default-form-input',
-      errorCssClass: 'form-error',
-      successCssClass: 'form-success'
-    }),
+    IonCustomFormBuilderModule.forRoot(),
     CommonModule,
     FormsModule,
     IonicModule,

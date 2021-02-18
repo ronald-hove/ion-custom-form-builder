@@ -1,99 +1,59 @@
-<form
-  [formGroup]="customForm"
-  novalidate
-  *ngIf="formBuilt"
-  (ngSubmit)="submitForm()"
->
-  <ion-row
-    justify-content-center
-    align-items-center
-    *ngFor="let field of formFields"
-  >
-    <!-- Inline Text field controller -->
-    <ion-item
-      *ngIf="
-        field.formFieldType === 'inline' || field.formFieldType === undefined
-      "
-      lines="none"
-      [ngClass]="setCssClasses(field)"
-    >
-      <ion-icon slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
-      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
-      <ion-input
-        *ngIf="field?.placeholder"
-        mode="md"
-        placeholder="{{field?.placeholder}}"
-        type="{{ field.type }}"
-        formControlName="{{ field.formControlName }}"
-      ></ion-input>
-      <ion-input
-        *ngIf="field?.placeholder === undefined"
-        mode="md"
-        type="{{ field.type }}"
-        formControlName="{{ field.formControlName }}"
-      ></ion-input>
-    </ion-item>
+<form [formGroup]="customForm" novalidate *ngIf="formBuilt" (ngSubmit)="submitForm()">
+  <ion-row *ngFor="let field of formFields">
+    <ion-col>
+      <!-- Inline Text field controller -->
+      <ion-item *ngIf="field.formFieldType === 'inline' || field.formFieldType === undefined">
+        <ion-icon slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
+        <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+          field.title }}
+        </ion-label>
+        <ion-input *ngIf="field?.placeholder" mode="md" placeholder="{{field?.placeholder}}" type="{{ field.type }}"
+          formControlName="{{ field.formControlName }}">
+        </ion-input>
+        <ion-input *ngIf="field?.placeholder === undefined" mode="md" type="{{ field.type }}"
+          formControlName="{{ field.formControlName }}">
+        </ion-input>
+      </ion-item>
 
-    <!-- Credit card field controller -->
-    <ion-item
-      *ngIf="
-        field.formFieldType === 'card'
-      "
-      lines="none"
-      [ngClass]="setCssClasses(field)"
-    >
-      <div
-        *ngIf="showCardIcons"
-        slot="start"
-        [ngStyle]="createCardIcon(creditCardImg)"
-      ></div>
-      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
-      <ion-input
-        *ngIf="field?.placeholder"
-        mode="md"
-        placeholder="{{field?.placeholder}}"
-        type="{{ field.type }}"
-        formControlName="{{ field.formControlName }}"
-      ></ion-input>
-      <ion-input
-        *ngIf="field?.placeholder === undefined"
-        mode="md"
-        type="{{ field.type }}"
-        formControlName="{{ field.formControlName }}"
-      ></ion-input>
-    </ion-item>
+      <!-- Credit card field controller -->
+      <ion-item *ngIf="field.formFieldType === 'card'">
+        <div *ngIf="showCardIcons" slot="start" [ngStyle]="createCardIcon(creditCardImg)"></div>
+        <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+          field.title }}
+        </ion-label>
+        <ion-input *ngIf="field?.placeholder" mode="md" placeholder="{{field?.placeholder}}" type="{{ field.type }}"
+          formControlName="{{ field.formControlName }}">
+        </ion-input>
+        <ion-input *ngIf="field?.placeholder === undefined" mode="md" type="{{ field.type }}"
+          formControlName="{{ field.formControlName }}">
+        </ion-input>
+      </ion-item>
 
-    <!-- Text Area Controller -->
-    <ion-item
-      *ngIf="field.formFieldType === 'textarea'"
-      lines="none"
-      [ngClass]="setCssClasses(field)"
-    >
-      <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{ field.title }}</ion-label>
-      <ion-textarea
-        *ngIf="field?.placeholder"
-        mode="md"
-        rows="{{ field?.textAreaRowCount }}"
-        formControlName="{{ field.formControlName }}"
-        placeholder="{{field?.placeholder}}"
-      ></ion-textarea>
-      <ion-textarea
-        *ngIf="field?.placeholder === undefined"
-        mode="md"
-        rows="{{ field?.textAreaRowCount }}"
-        formControlName="{{ field.formControlName }}"
-      ></ion-textarea>
-    </ion-item>
+      <!-- Ion-Select -->
+
+      <!-- Date Picker -->
+
+      <!-- Text Area Controller -->
+      <ion-item *ngIf="field.formFieldType === 'textarea'">
+        <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+          field.title }}
+        </ion-label>
+        <ion-textarea *ngIf="field?.placeholder" mode="md" rows="{{ field?.textAreaRowCount }}"
+          formControlName="{{ field.formControlName }}" placeholder="{{field?.placeholder}}"></ion-textarea>
+        <ion-textarea *ngIf="field?.placeholder === undefined" mode="md" rows="{{ field?.textAreaRowCount }}"
+          formControlName="{{ field.formControlName }}">
+        </ion-textarea>
+      </ion-item>
+    </ion-col>
   </ion-row>
 
   <!-- Submit Button -->
-  <ion-row align-items-center justify-content-center margin-top>
-    <ion-button
-      color="{{submitButtonColor ? submitButtonColor : 'primary'}}"
-      type="submit"
-      [disabled]="hasValidationErrors() || hasFieldErrors()"
-    >
+  <ion-row >
+    <ion-col>
+      <ion-button expand="block" color="{{submitButtonColor ? submitButtonColor : 'primary'}}" type="submit"
+      [disabled]="hasValidationErrors() || hasFieldErrors()">
       {{ submitButtonText }}
-    </ion-button>
+      </ion-button>
+    </ion-col>
   </ion-row>
 </form>
