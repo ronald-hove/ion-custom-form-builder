@@ -1,40 +1,113 @@
-import { AbstractControl, Validators } from '@angular/forms';
-/*
-* icon: ion-icon name
-*
-* title: Form field label
-*
-* formControlName: Used to identify the field by angular form builder
-*
-* control: Form field controller holds form input data
-*
-* validators: An array of validators ie [Validators.required, Validators.minLength(10) . . ] full list of form validators in angular docs
-*
-* type: i.e <input type="text"> | support 'email', 'number', 'password', 'text', 'tel'
-*
-* placeholder: form field placeholder
-*
-* formFieldValue: preset formField value
-*
-* formFieldType: Current version supports 'inline' and 'textarea'
-*
-* textAreaRowCount: The height in rows if formFieldType === 'textarea'
-*
-* errors: A boolean for whether or not form field has additional errors apart from validation errors i.e errors applied on a network callback
-*
-* labelPosition: supported => 'floating', 'stacked', 'fixed'
-*/
+import { AsyncValidator, Validators } from '@angular/forms';
+
 export interface FormField {
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     icon?: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     title: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     formControlName: string;
-    control: AbstractControl;
-    validators: Validators[];
+
+    /**
+     *
+     *
+     * @type {Validators[]}
+     * @memberof FormField
+     */
+    validators?: Validators[];
+
+    /**
+     *
+     *
+     * @type {AsyncValidator}
+     * @memberof FormField
+     */
+    asyncValidator?: AsyncValidator;
+
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     type: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     placeholder?: string;
-    formFieldValue?: string;
+
+    /**
+     *
+     *
+     * @type {*}
+     * @memberof FormField
+     */
+    value?: any;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     formFieldType?: string;
+
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof FormField
+     */
     textAreaRowCount?: number;
+
+    /**
+     *
+     *
+     * @type {boolean}
+     * @memberof FormField
+     */
     errors?: boolean;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     labelPosition?: string;
+
+    /**
+     *
+     *
+     * @type {ValidationMessage []}
+     * @memberof FormField
+     */
+    validationMessages?: ValidationMessage []
+}
+
+export interface ValidationMessage {
+  type: string;
+  message: string;
 }

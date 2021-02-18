@@ -1,6 +1,7 @@
-import { FormField } from './../components/ion-custom-form-builder/form-field-interface';
-import { AbstractControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
+
+import { FormField } from './../components/ion-custom-form-builder/form-field-interface';
 
 @Component({
   selector: 'app-home',
@@ -8,52 +9,41 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+
+
   fields: FormField[] = [];
-  card: AbstractControl;
-  name: AbstractControl;
-  expiry: AbstractControl;
-  cvv: AbstractControl;
 
   constructor() {
     this.fields = [
       {
-        type: 'number',
-        title: 'Card Number',
-        formControlName: 'card',
-        control: this.card,
-        validators: [Validators.required],
-        formFieldType: 'card',
-        labelPosition: 'floating'
-      },
-      {
-        icon: 'person',
-        type: 'text',
-        title: 'Name on Card',
-        formControlName: 'name',
-        control: this.name,
-        validators: [Validators.required],
-        formFieldType: 'inline',
-        labelPosition: 'floating'
-      },
-      {
-        icon: 'calendar',
-        type: 'number',
-        title: 'Card Expiry',
-        formControlName: 'expiry',
-        control: this.expiry,
-        validators: [Validators.required],
-        formFieldType: 'inline',
-        labelPosition: 'floating'
+        icon: 'mail',
+        type: 'email',
+        title: 'Email',
+        formControlName: 'email',
+        validators: [Validators.required, Validators.email],
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Email is required'
+          },
+          {
+            type: 'email',
+            message: 'Email is incorrect'
+          }
+        ]
       },
       {
         icon: 'lock-closed',
-        type: 'number',
-        title: 'CVV',
-        formControlName: 'cvv',
-        control: this.cvv,
+        type: 'text',
+        title: 'Password',
+        formControlName: 'password',
         validators: [Validators.required],
-        formFieldType: 'inline',
-        labelPosition: 'floating'
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Password is required'
+          }
+        ]
       }
     ];
   }
