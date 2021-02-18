@@ -8,11 +8,11 @@
 
 <ion-content>
   <ion-custom-form-builder
+    [showCardIcons]="true"
     [formFields]="fields"
     [submitButtonText]="'Pay Now'"
-    [showIcons]="false"
-    [showCardIcons]="false"
-    (formSubmission)="submitForm($event)" 
+    [showIcons]="true"
+    (formSubmission)="submitForm($event)"
     [returnCreditCardType]="true"
   >
   </ion-custom-form-builder>

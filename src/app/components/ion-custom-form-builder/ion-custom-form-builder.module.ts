@@ -25,7 +25,7 @@ const Components = [
   ]
 })
 export class IonCustomFormBuilderModule {
-  static forRoot(options?: IonCustomFormBuilderConfig): ModuleWithProviders {
+  static forRoot(options?: IonCustomFormBuilderConfig): ModuleWithProviders<any> {
     return {
       ngModule: IonCustomFormBuilderModule,
       providers: [

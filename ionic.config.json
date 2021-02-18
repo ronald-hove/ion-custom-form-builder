@@ -1,5 +1,7 @@
 {
   "name": "ion-custom-form-builder",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
