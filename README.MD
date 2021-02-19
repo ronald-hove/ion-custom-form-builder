@@ -21,7 +21,7 @@ Features (Current Version)
 Upcoming Features
   - Credit Card Expiration Validation
   - Date Validation With Auto Correction
-  - Radio and Checkbox support 
+  - Radio and Checkbox support
   - Dropdowns (Ion Select support)
   - Toggle buttons
 
@@ -66,8 +66,8 @@ Now in your *.page.html file add
 ...
   <ion-custom-form-builder
     [formFields]="fields"
-    [submitButtonText]="'Submit'"
-    (formSubmission)="submitForm($event)" 
+    [submitButtonText]="'Login'"
+    (formSubmission)="submitForm($event)"
   >
   </ion-custom-form-builder>
 ...
@@ -79,12 +79,10 @@ Head over to your  *.page.ts file and add
 
   ...
   import { FormField } from 'ion-custom-form-builder';
-  import { AbstractControl, Validators } from '@angular/forms';
+  import { Validators } from '@angular/forms';
   ...
 
   fields: FormField[] = [];
-  email: AbstractControl;
-  password: AbstractControl;
 
   constructor() {
     this.fields = [
@@ -93,16 +91,30 @@ Head over to your  *.page.ts file and add
         type: 'email',
         title: 'Email',
         formControlName: 'email',
-        control: this.email,
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.email],
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Email is required'
+          },
+          {
+            type: 'email',
+            message: 'Email is incorrect'
+          }
+        ]
       },
       {
-        icon: 'lock',
-        type: 'password',
+        icon: 'lock-closed',
+        type: 'text',
         title: 'Password',
         formControlName: 'password',
-        control: this.email,
-        validators: [Validators.required]
+        validators: [Validators.required],
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Password is required'
+          }
+        ]
       }
     ];
   }
@@ -118,135 +130,125 @@ Head over to your  *.page.ts file and add
 The FormField interface has the following structure with some important notes
 
 ```ts
-/*
-* icon: ion-icon name
-*
-* title: Form field label
-*
-* formControlName: Used to identify the field by angular form builder
-*
-* control: Form field controller holds form input data
-*
-* validators: An array of validators ie [Validators.required, Validators.minLength(10) . . ] full list of form validators in angular docs
-*
-* type: i.e <input type="text"> | support 'email', 'number', 'password', 'text', 'tel'
-*
-* placeholder: form field placeholder
-*
-* formFieldValue: preset formField value
-*
-* formFieldType: Current version supports 'inline' and 'textarea'
-*
-* textAreaRowCount: The height in rows if formFieldType === 'textarea'
-*
-* errors: A boolean for whether or not form field has additional errors apart from validation errors i.e errors applied on a network callback
-*
-* labelPosition: supported => 'floating', 'stacked', 'fixed'
-*/
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
+
 export interface FormField {
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     icon?: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     title: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     formControlName: string;
-    control: AbstractControl;
-    validators: Validators[];
+
+    /**
+     *
+     *
+     * @type {Validators[]}
+     * @memberof FormField
+     */
+    validators?: ValidatorFn[];
+
+    /**
+     *
+     *
+     * @type {AsyncValidator}
+     * @memberof FormField
+     */
+    asyncValidators?: AsyncValidatorFn[];
+
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     type: string;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     placeholder?: string;
-    formFieldValue?: string;
+
+    /**
+     *
+     *
+     * @type {*}
+     * @memberof FormField
+     */
+    value?: any;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     formFieldType?: string;
+
+    /**
+     *
+     *
+     * @type {number}
+     * @memberof FormField
+     */
     textAreaRowCount?: number;
+
+    /**
+     *
+     *
+     * @type {boolean}
+     * @memberof FormField
+     */
     errors?: boolean;
+
+    /**
+     *
+     *
+     * @type {string}
+     * @memberof FormField
+     */
     labelPosition?: string;
+
+    /**
+     *
+     *
+     * @type {ValidationMessage []}
+     * @memberof FormField
+     */
+    validationMessages?: ValidationMessage []
+}
+
+export interface ValidationMessage {
+  type: string;
+  message: string;
 }
 
 ```
 
 # Css Styling
 
-By default the form builder component has the following css classes applied on Success or Error Validations
-
-```css
-.default-form-input {
-  border: 1px solid #007bff;
-  border-radius: 0.5rem;
-  margin-top: 16px;
-  width: 80%;
-}
-
-.default-form-input-error {
-  border: 1px solid #dc3545;
-}
-
-.default-form-input-success {
-  border: 1px solid #28a745;
-}
-```
-
-In order to get your own colors on Success or Error Validations, you can override the defaults by placing your css classes in the **global.scss** file
-
-**IMPORTANT**
-
-Use the following rules when you override the css classes 
-
-If you override any of the classes, you have to include all the original class properties and set them as important 
-
-e.g
-```css
-.override-default-form-input{
-  border: 1px solid your_new_color !important;
-  border-radius: your_new_border_radius !important;
-  margin-top: your_new_border_margin !important;
-  width: your_new_border_width !important;
-}
-
-```
-
-For success and error classes, only override the border class property
-
-**NOTE**
-
-You can use your own custom made css that does not follow the above structure to style the form fields since internally the DOM structure is made up of official ion-components.
-
-In that case you do not have to override the defaults ,simply pass in your own custom css class name using one of the **applying Css methods** below
-
-
-# Applying Css Styling
-<h2>Method 1: add the classes as module configuration options</h2>
-
-```ts
-...
-import { IonCustomFormBuilderModule } from 'ion-custom-form-builder';
-...
-
-@NgModule({
-  imports: [
-    ...
-    IonCustomFormBuilderModule.forRoot({
-      defaultCssClass: 'override-default-form-input',
-      errorCssClass: 'override-default-form-error',
-      successCssClass: 'override-default-form-success'
-    })
-    ...
-  ]
-})
-...
-```
-
-
-<h2>Method 2: Use component Inputs</h2>
-
-```html
-...
-  <ion-custom-form-builder
-    [formFields]="fields"
-    [submitButtonText]="'Submit'"
-    [defaultCssClass]="override-default-form-input'"
-    [errorCssClass]="'override-default-form-error'"
-    [successCssClass]="'override-default-form-success'"
-    (formSubmission)="submitForm($event)" 
-  >
-  </ion-custom-form-builder>
-...
-```
+TODO: update styling docs
 
 # **Advanced Features**
 
@@ -266,38 +268,96 @@ The ion-form-builder component provides you with an elegant way to validate pass
 
 Head over to your  *.page.ts file and add
 
-For this work you need to explicitly use **password** and **confirm_password** as your fromControlName & AbstractControl variable name
+In your *.page.ts file , create  **FormField** array objects with **formFieldType** of **'password'** & **'confirm-password'**
 
 ```ts
 
   ...
   import { FormField } from 'ion-custom-form-builder';
-  import { AbstractControl, Validators } from '@angular/forms';
+  import { Validators } from '@angular/forms';
   ...
 
   fields: FormField[] = [];
-  password: AbstractControl;
-  confirm_password: AbstractControl;
 
   constructor() {
     this.fields = [
       {
-        icon: 'lock',
-        type: 'password',
+        icon: 'lock-closed',
+        type: 'text',
         title: 'Password',
         formControlName: 'password',
-        control: this.password,
-        validators: [Validators.required]
+        validators: [Validators.required],
+        asyncValidators: [this.passwordValidator],
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Password is required'
+          },
+          {
+            type: 'passwordValidator',
+            message: 'Passwords do not match'
+          }
+        ],
       },
       {
-        icon: 'lock',
-        type: 'password',
+        icon: 'lock-closed',
+        type: 'text',
         title: 'Confirm Password',
-        formControlName: 'confirm_password',
-        control: this.confirm_password,
-        validators: [Validators.required]
+        formControlName: 'confirm-password',
+        validators: [Validators.required],
+        asyncValidators: [this.confirmPasswordValidator],
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Please confirm your password'
+          },
+          {
+            type: 'confirmPasswordValidator',
+            message: 'Passwords do not match'
+          }
+        ]
       }
     ];
+  }
+  ...
+
+  /**
+   * Validates password against password confirmation
+   *
+   * @param {AbstractControl} control
+   * @return {*}  {Promise<any>}
+   */
+  passwordValidator(control: AbstractControl): Promise<any> {
+    if (!control.parent) {
+      return Promise.resolve(null)
+    }else if (control?.parent.get('confirm-password')?.value && control?.value !== control?.parent.get('confirm-password')?.value) {
+      control.markAsTouched({ onlySelf: true });
+      return Promise.resolve({ passwordValidator: { valid: false } });
+    }else {
+      if (control?.parent.get('confirm-password')?.invalid) {
+        control?.parent.get('confirm-password')?.updateValueAndValidity({ onlySelf: true });
+      }
+      return Promise.resolve(null)
+    }
+  }
+
+
+  /**
+   * validates password confirmation against password
+   *
+   * @param {AbstractControl} control
+   * @return {*}  {Promise<any>}
+   */
+  confirmPasswordValidator(control: AbstractControl): Promise<any> {
+    if (!control.parent) {
+      return Promise.resolve(null)
+    }else if (control?.parent.get('password')?.value && control?.value !== control?.parent.get('password')?.value) {
+      control?.parent.get('password')?.updateValueAndValidity({ onlySelf: true });
+      return Promise.resolve({ confirmPasswordValidator: { valid: false } });
+    }else {
+      control?.parent.get('password')?.updateValueAndValidity({ onlySelf: true });
+      return Promise.resolve(null)
+    }
   }
   ...
 
@@ -337,23 +397,26 @@ assets to your project assets folder
   ...
 ```
 
-in your *.page.ts file , create a **FormField** array object with a **formFieldType** of **'card'**
+In your *.page.ts file , create a **FormField** array object with a **formFieldType** of **'credit-card'**
 
 ```ts
 ...
   fields: FormField[] = [];
-  card: AbstractControl;
 
   constructor() {
     this.fields = [
       {
         type: 'number',
-        title: 'Card Number',
+        title: 'Card',
         formControlName: 'card',
-        control: this.card,
+        formFieldType: 'credit-card',
         validators: [Validators.required],
-        formFieldType: 'card',
-        labelPosition: 'stacked'
+        validationMessages: [
+          {
+            type: 'required',
+            message: 'Credit card number is required'
+          }
+        ]
       }
     ];
   }
@@ -372,36 +435,21 @@ Serve your app again to see the changes
 
 Say you are working on a login form and you want to set errors to your form fields when the user has entered the incorrect credentials
 
-In your *.html file use the input **[errorsIndex]** that takes in an array of indices representing the index of the field to which you want to set an error
-
 
 ```html
 ...
   <ion-custom-form-builder
     [formFields]="loginForm"
     [submitButtonText]="'Login'"
-    (formSubmission)="doLogin($event)"
-    [errorsIndex]="loginErrors"
+    (formSubmission)="onLogin($event)"
   >
   </ion-custom-form-builder>
 ...
 ```
 
-In your *.ts file, lets assume you have some api that handles login.
-
-Init an array **loginErrors**
-
-When you encounter an error, say your api throws back a 401 error, you want to push the indices of the email and password fields into your **loginErrors** array
-
-the result will be the email and password applying the error css class notifying the user that something is wrong with the login credentials
-
-
 ```ts
 ...
   loginForm: FormField[] = [];
-  email: AbstractControl;
-  password: AbstractControl;
-  loginErrors: any[] = [];
 ...
 
   constructor(
@@ -413,29 +461,16 @@ the result will be the email and password applying the error css class notifying
         type: 'email',
         title: 'Email',
         formControlName: 'email',
-        control: this.email,
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.email]
       },
       {
-        icon: 'lock',
+        icon: 'lock-closed',
         type: 'password',
         title: 'Password',
         formControlName: 'password',
-        control: this.email,
         validators: [Validators.required]
       }
     ];
-  }
-
-  doLogin(formData) {
-    this.api.login(formData).then( response => {
-      // Some success logic 
-    }).catch( error => {
-      // We know email and password fields are at index 0 and 1 respectively for the purpose of this example
-      // You could have some intelligent logic to determine fields to which you want errors applied 
-      this.loginErrors = [0, 1];
-      loader.dismiss();
-    });
   }
 ...
 ```

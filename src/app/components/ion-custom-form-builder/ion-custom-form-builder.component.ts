@@ -1,25 +1,29 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ValidationErrors } from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import * as payform from 'payform';
+import { Subscription } from 'rxjs';
 
 import { IonCustomFormBuilderConfig } from './config-options-interface';
 import { ION_CUSTOM_FORM_BUILDER_CONFIG } from './config-options.token';
 import { FormField } from './form-field-interface';
+import { IonCustomFormBuilderService } from './ion-custom-form-builder.service';
 
 @Component({
   selector: 'ion-custom-form-builder',
   templateUrl: './ion-custom-form-builder.component.html',
   styleUrls: ['./ion-custom-form-builder.component.scss'],
 })
-export class IonCustomFormBuilderComponent implements OnInit {
+export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
+
 
   /**
    *
    *
-   * @type {FormGroup}
+   * @type {Subscription}
    * @memberof IonCustomFormBuilderComponent
    */
-  customForm: FormGroup;
+  creditCardInputSubscription: Subscription
+
 
   /**
    *
@@ -52,36 +56,102 @@ export class IonCustomFormBuilderComponent implements OnInit {
    */
   creditCardImg = 'generic.svg';
 
+  /**
+   *
+   *
+   * @type {FormGroup}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  customForm: FormGroup;
+
+  /**
+   *
+   *
+   * @type {FormField []}
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() formFields: FormField [] = [];
+
+  /**
+   *
+   *
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() submitButtonText  = 'Submit';
+
+  /**
+   *
+   *
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() showLabels = true;
+
+  /**
+   *
+   *
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() showIcons = true;
+
+  /**
+   *
+   *
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() showCardIcons = true;
+
+  /**
+   *
+   *
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() returnCreditCardType = false;
-  /* supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary' */
+
+  /**
+   * Supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary'
+   *
+   * @type {string}
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() iconColor: string = this.config ? this.config.defaultIconColor : undefined;
+
+  /**
+   * Supports ionic theme colors defined in theme/variables.css i.e 'primary', 'secondary'
+   *
+   * @type {string}
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Input() submitButtonColor: string = this.config ? this.config.submitButtonColor : undefined;
+
+  /**
+   *
+   *
+   * @type {EventEmitter<any>}
+   * @memberof IonCustomFormBuilderComponent
+   */
   @Output() formSubmission: EventEmitter<any> = new EventEmitter<any>();
 
+
   constructor(
+    private ionCustomFormBuilderService: IonCustomFormBuilderService,
     private formBuilder: FormBuilder,
     @Inject(ION_CUSTOM_FORM_BUILDER_CONFIG) private config: IonCustomFormBuilderConfig
   ) {}
 
 
   ngOnInit() {
-    this.formFields.forEach((element, index, self) => {
-      this.formControls[`${element.formControlName}`] = ['', element.validators];
-      if (element.formFieldType === 'credit-card') {
-        // TODO:
-        // write async validator for credit card input
-      }
-    });
-
+    this.buildFormControlsConfig();
     this.customForm = this.formBuilder.group(this.formControls);
     this.prePopulateForm();
-
+    this.watchCreditCardInput();
     this.formBuilt = true;
+    this.watchFormSubmissionTriggerByService();
+  }
+
+
+
+  ngOnDestroy() {
+    this.creditCardInputSubscription.unsubscribe();
   }
 
    /**
@@ -115,6 +185,122 @@ export class IonCustomFormBuilderComponent implements OnInit {
     this.formSubmission.emit(this.customForm.value);
   }
 
+  /**
+   * Returns the abstract control for a form field by name
+   *
+   * @private
+   * @param {number} index
+   * @return {*}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  public getFormControlByName(formControlName: string) {
+    return this.customForm.get(formControlName);
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @memberof IonCustomFormBuilderComponent
+   */
+  private buildFormControlsConfig() {
+    this.formFields.forEach((element, index) => {
+      switch (element.formFieldType) {
+        case 'credit-card':
+          this.formFields[index].validationMessages.push({
+            type: 'creditCardValidator',
+            message: 'Credit card number is invalid'
+          });
+          this.creditCardFieldIndex = index;
+          this.formControls[`${element.formControlName}`] = new FormControl(null,
+            {
+              validators: element.validators,
+              asyncValidators: [
+                this.creditCardValidator.bind(this)
+              ]
+            });
+          break;
+        default:
+          if (element.asyncValidators) {
+            this.formControls[`${element.formControlName}`] = new FormControl(null,
+              {
+                validators: element.validators,
+                asyncValidators: this.processAsyncValidators(element, this)
+              });
+          } else {
+            this.formControls[`${element.formControlName}`] = ['', element.validators];
+          }
+          break;
+      }
+    });
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @param {FormField} element
+   * @param {this} form
+   * @return {*}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  private processAsyncValidators(element: FormField, abstractControl: this) {
+    element.asyncValidators.forEach(asyncValidator => {
+      asyncValidator.bind(abstractControl)
+    })
+    return element.asyncValidators;
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @memberof IonCustomFormBuilderComponent
+   */
+  private watchFormSubmissionTriggerByService() {
+    this.ionCustomFormBuilderService.triggerFormSubmission$.subscribe( trigger => {
+      if (trigger) {
+        this.onSubmit();
+      }
+    })
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @memberof IonCustomFormBuilderComponent
+   */
+  private watchCreditCardInput() {
+    if(this.creditCardFieldIndex !== undefined) {
+      this.creditCardInputSubscription = this.getFormControlByIndex(this.creditCardFieldIndex)
+      .valueChanges
+      .subscribe(cardNumberValue => {
+        this.detectCardType(cardNumberValue);
+      })
+    }
+  }
+
+
+  /**
+   *
+   *
+   * @private
+   * @param {AbstractControl} control
+   * @return {*}  {Promise<any>}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  private creditCardValidator(control: AbstractControl): Promise<any> {
+    if (!control.parent) {
+      return Promise.resolve(null)
+    }else if (control?.value && !this.isCardNumberValid(control.value)) {
+      control.markAsTouched({ onlySelf: true });
+      return Promise.resolve({ creditCardValidator: { valid: false } });
+    }else {
+      return Promise.resolve(null)
+    }
+  }
+
 
   /**
    * Pre-populates the form with initial values if provided
@@ -133,7 +319,7 @@ export class IonCustomFormBuilderComponent implements OnInit {
 
 
   /**
-   * Returns the abstract control for a form field
+   * Returns the abstract control for a form field by index
    *
    * @private
    * @param {number} index
@@ -144,17 +330,6 @@ export class IonCustomFormBuilderComponent implements OnInit {
     return this.customForm.get(`${this.formFields[index].formControlName}`);
   }
 
-  /**
-   *
-   *
-   * @private
-   * @param {number} index
-   * @return {*}
-   * @memberof IonCustomFormBuilderComponent
-   */
-  public getFormControlByName(formControlName: string) {
-    return this.customForm.get(formControlName);
-  }
 
   /**
    * Validates card number using payform lib
@@ -163,7 +338,7 @@ export class IonCustomFormBuilderComponent implements OnInit {
    * @param {*} cardNumber
    * @memberof IonCustomFormBuilderComponent
    */
-  private validateCardNumber(cardNumber: any) {
+  private isCardNumberValid(cardNumber: any) {
     return payform.validateCardNumber(cardNumber);
   }
 

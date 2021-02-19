@@ -1,4 +1,4 @@
-import { AsyncValidator, Validators } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 
 export interface FormField {
     /**
@@ -31,7 +31,7 @@ export interface FormField {
      * @type {Validators[]}
      * @memberof FormField
      */
-    validators?: Validators[];
+    validators?: ValidatorFn[];
 
     /**
      *
@@ -39,7 +39,7 @@ export interface FormField {
      * @type {AsyncValidator}
      * @memberof FormField
      */
-    asyncValidator?: AsyncValidator;
+    asyncValidators?: AsyncValidatorFn[];
 
 
     /**
