@@ -35,7 +35,7 @@ export class HomePage {
       },
       {
         icon: 'lock-closed',
-        type: 'text',
+        type: 'password',
         title: 'Password',
         formControlName: 'password',
         validators: [Validators.required],
@@ -53,7 +53,7 @@ export class HomePage {
       },
       {
         icon: 'lock-closed',
-        type: 'text',
+        type: 'password',
         title: 'Confirm Password',
         formControlName: 'confirm-password',
         validators: [Validators.required],

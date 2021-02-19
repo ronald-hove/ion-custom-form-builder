@@ -85,14 +85,6 @@ export interface FormField {
     /**
      *
      *
-     * @type {boolean}
-     * @memberof FormField
-     */
-    errors?: boolean;
-
-    /**
-     *
-     *
      * @type {string}
      * @memberof FormField
      */

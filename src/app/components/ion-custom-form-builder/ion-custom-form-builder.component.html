@@ -1,8 +1,8 @@
 <form [formGroup]="customForm" novalidate *ngIf="formBuilt" (ngSubmit)="onSubmit()">
   <ion-row *ngFor="let field of formFields">
     <ion-col>
-      <!-- Inline Text field controller -->
-      <ng-container *ngIf="field.formFieldType === 'inline' || field.formFieldType === undefined">
+      <!-- ion-input Text field controller -->
+      <ng-container *ngIf="field.formFieldType === 'ion-input' || field.formFieldType === undefined">
         <ion-item >
           <ion-icon slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
           <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
@@ -51,7 +51,7 @@
       </ng-container>
 
       <!-- Text Area Controller -->
-      <ng-container *ngIf="field.formFieldType === 'textarea'">
+      <ng-container *ngIf="field.formFieldType === 'ion-textarea'">
         <ion-item >
           <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
             field.title }}

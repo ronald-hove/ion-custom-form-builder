@@ -12,19 +12,22 @@ Features (Current Version)
   - [Email Validation](#usage-example)
   - [Password Validation](#working-with-passwords)
   - [Credit Card Validation (With support for detecting card type)](#credit-card-validation)
-  - [Set Success or Error Validation Colors](#css-styling)
   - [Set errors to specific fields](#Set-errors-to-specific-fields)
-  - Inline Form Fields
-  - Text Area Form Fields
+  - Ionic form field types included
+    - ion-input
+    - ion-textarea
+    - ion-datetime (coming-soon)
+    - ion-select (coming-soon)
+    - ion-checkbox (coming-soon)
+    - ion-radio (coming-soon)
+    - ion-toggle (coming-soon)
+    - ion-range (coming-soon)
   - Use Official Ionic Icons
 
 Upcoming Features
   - Credit Card Expiration Validation
   - Date Validation With Auto Correction
-  - Radio and Checkbox support
-  - Dropdowns (Ion Select support)
-  - Toggle buttons
-
+  - File Input
 
 # Usage Example Output
 
@@ -105,7 +108,7 @@ Head over to your  *.page.ts file and add
       },
       {
         icon: 'lock-closed',
-        type: 'text',
+        type: 'password',
         title: 'Password',
         formControlName: 'password',
         validators: [Validators.required],
@@ -126,6 +129,14 @@ Head over to your  *.page.ts file and add
   ...
 
 ```
+
+Serve your app to see it in action
+
+```txt
+ionic serve
+```
+
+# FormField model
 
 The FormField interface has the following structure with some important notes
 
@@ -217,14 +228,6 @@ export interface FormField {
     /**
      *
      *
-     * @type {boolean}
-     * @memberof FormField
-     */
-    errors?: boolean;
-
-    /**
-     *
-     *
      * @type {string}
      * @memberof FormField
      */
@@ -243,7 +246,6 @@ export interface ValidationMessage {
   type: string;
   message: string;
 }
-
 ```
 
 # Css Styling
@@ -283,7 +285,7 @@ In your *.page.ts file , create  **FormField** array objects with **formFieldTyp
     this.fields = [
       {
         icon: 'lock-closed',
-        type: 'text',
+        type: 'password',
         title: 'Password',
         formControlName: 'password',
         validators: [Validators.required],
@@ -301,7 +303,7 @@ In your *.page.ts file , create  **FormField** array objects with **formFieldTyp
       },
       {
         icon: 'lock-closed',
-        type: 'text',
+        type: 'password',
         title: 'Confirm Password',
         formControlName: 'confirm-password',
         validators: [Validators.required],

@@ -293,7 +293,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
   private creditCardValidator(control: AbstractControl): Promise<any> {
     if (!control.parent) {
       return Promise.resolve(null)
-    }else if (control?.value && !this.isCardNumberValid(control.value)) {
+    }else if (control !== undefined && control.value && !this.isCardNumberValid(control.value)) {
       control.markAsTouched({ onlySelf: true });
       return Promise.resolve({ creditCardValidator: { valid: false } });
     }else {
