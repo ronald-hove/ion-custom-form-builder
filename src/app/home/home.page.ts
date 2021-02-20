@@ -1,8 +1,8 @@
-import { IonCustomFormBuilderService } from './../components/ion-custom-form-builder/ion-custom-form-builder.service';
 import { Component } from '@angular/core';
-import { Validators, AbstractControl } from '@angular/forms';
+import { AbstractControl, Validators } from '@angular/forms';
 
 import { FormField } from './../components/ion-custom-form-builder/form-field-interface';
+import { IonCustomFormBuilderService } from './../components/ion-custom-form-builder/ion-custom-form-builder.service';
 
 @Component({
   selector: 'app-home',

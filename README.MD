@@ -13,24 +13,31 @@ Features (Current Version)
   - [Password Validation](#working-with-passwords)
   - [Credit Card Validation (With support for detecting card type)](#credit-card-validation)
   - [Implement Your Own Submit Button](#Implement-your-own-submit-button)
-  - Ionic form field types included
+  - Ionic FormFieldTypes included
     - ion-input
     - ion-textarea
-    - ion-datetime (coming-soon)
-    - ion-select (coming-soon)
-    - ion-checkbox (coming-soon)
-    - ion-radio (coming-soon)
-    - ion-toggle (coming-soon)
-    - ion-range (coming-soon)
   - Use Official Ionic Icons
-  - [Set errors to specific fields](#Set-errors-to-specific-fields) (in-development)
-  - [Css Styling](#Css-styling) (in-development)
-
 
 Upcoming Features
+  - Set errors to specific fields
+  - Css Styling
+  - Additional FormFieldTypes
+    - ion-datetime
+    - ion-select
+    - ion-checkbox
+    - ion-radio
+    - ion-toggle
+    - ion-range
   - Credit Card Expiration Validation
-  - Date Validation With Auto Correction
+  - Date Validation
   - File Input
+
+Docs
+  - [FormField Model](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/form-field-model.md)
+  - [Component Inputs](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/component-inputs.md)
+  - [Component Outputs](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/component-outputs.md)
+  - [Examples](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/examples.md)
+
 
 # Usage Example Output
 
@@ -139,127 +146,11 @@ Serve your app to see it in action
 ionic serve
 ```
 
-# FormField model
-
-The FormField interface has the following structure with some important notes
-
-```ts
-import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-
-export interface FormField {
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    icon?: string;
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    title: string;
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    formControlName: string;
-
-    /**
-     *
-     *
-     * @type {Validators[]}
-     * @memberof FormField
-     */
-    validators?: ValidatorFn[];
-
-    /**
-     *
-     *
-     * @type {AsyncValidator}
-     * @memberof FormField
-     */
-    asyncValidators?: AsyncValidatorFn[];
-
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    type: string;
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    placeholder?: string;
-
-    /**
-     *
-     *
-     * @type {*}
-     * @memberof FormField
-     */
-    value?: any;
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    formFieldType?: string;
-
-    /**
-     *
-     *
-     * @type {number}
-     * @memberof FormField
-     */
-    textAreaRowCount?: number;
-
-    /**
-     *
-     *
-     * @type {string}
-     * @memberof FormField
-     */
-    labelPosition?: string;
-
-    /**
-     *
-     *
-     * @type {ValidationMessage []}
-     * @memberof FormField
-     */
-    validationMessages?: ValidationMessage []
-}
-
-export interface ValidationMessage {
-  type: string;
-  message: string;
-}
-```
-
-# Css Styling
-
-- In Development
-
 # **Advanced Features**
 
   - Password Validation
-  - Set errors to specific fields on network calls
   - Credit Card Validation
+  - Implement Your Own Submit Button
 
 # Working with passwords
 
@@ -433,10 +324,6 @@ Serve your app again to see the changes
 ```txt
   ionic serve
 ```
-
-# Set Errors to Specific Fields
-
-- In Development
 
 # Implement Your Own Submit Button
 
