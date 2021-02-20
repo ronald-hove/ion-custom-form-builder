@@ -1,6 +1,6 @@
 # FormField model
 
-[<-- Home](../README.md)
+[<-- Home](https://github.com/ronald-hove/ion-custom-form-builder)
 
 
 The FormField interface has the following structure with some important notes

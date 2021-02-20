@@ -1,6 +1,6 @@
 # Outputs
 
-[<-- Home](../README.md)
+[<-- Home](https://github.com/ronald-hove/ion-custom-form-builder)
 
 - Below is a list of the available component outputs 
 
