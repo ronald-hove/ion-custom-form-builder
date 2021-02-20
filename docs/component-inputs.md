@@ -4,7 +4,7 @@
 
 - Below is a list of the available component inputs 
 
-<style>
+<style hidden>
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
