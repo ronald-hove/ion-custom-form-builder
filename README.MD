@@ -1,6 +1,6 @@
 # Ionic Custom Form Builder
 
-This is an ionic-angular component library for building forms with the highlight of doing form validation so you don't have to.
+This is an ionic-angular component library to simplify and eliminate some redundancies of building forms when developing ionic apps.
 
 [![NPM version](https://img.shields.io/npm/v/ion-custom-form-builder.svg?style=flat)](https://www.npmjs.org/package/ion-custom-form-builder)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/ion-custom-form-builder)
