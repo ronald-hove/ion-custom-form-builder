@@ -1,3 +1,4 @@
+import { IonCustomFormBuilderService } from './../components/ion-custom-form-builder/ion-custom-form-builder.service';
 import { Component } from '@angular/core';
 import { Validators, AbstractControl } from '@angular/forms';
 
@@ -14,7 +15,9 @@ export class HomePage {
   fields: FormField[] = [];
 
 
-  constructor() {
+  constructor(
+    private ionCfbService: IonCustomFormBuilderService
+  ) {
     this.fields = [
       {
         icon: 'mail',
@@ -126,7 +129,21 @@ export class HomePage {
     }
   }
 
-  submitForm(formData) {
+  /**
+   * Triggered by the form submission event
+   *
+   * @param {*} formData
+   */
+  onIonCfbFormSubmission(formData) {
     console.log('FORM_DATA=,', formData);
+  }
+
+
+  /**
+   * Trigger form submission using IonCustomFormBuilderService
+   *
+   */
+  onClickMyOwnSubmitButton() {
+    this.ionCfbService.triggerFormSubmission$.next(true)
   }
 }

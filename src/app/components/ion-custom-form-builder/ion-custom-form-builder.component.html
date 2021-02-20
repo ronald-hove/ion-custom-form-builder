@@ -1,83 +1,83 @@
 <form [formGroup]="customForm" novalidate *ngIf="formBuilt" (ngSubmit)="onSubmit()">
-  <ion-row *ngFor="let field of formFields">
-    <ion-col>
-      <!-- ion-input Text field controller -->
-      <ng-container *ngIf="field.formFieldType === 'ion-input' || field.formFieldType === undefined">
-        <ion-item >
-          <ion-icon slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
-          <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
-            field.title }}
-          </ion-label>
-          <ion-input *ngIf="field?.placeholder"  placeholder="{{field?.placeholder}}" type="{{ field.type }}"
-            formControlName="{{ field.formControlName }}">
-          </ion-input>
-          <ion-input *ngIf="field?.placeholder === undefined"  type="{{ field.type }}"
-            formControlName="{{ field.formControlName }}">
-          </ion-input>
-        </ion-item>
-        <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
-          <ng-container *ngFor="let validation of field?.validationMessages">
-            <div
-              *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
-              <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
+  <ng-container *ngFor="let field of formFields">
+    <ion-row class="ion-cfb-row">
+      <ion-col class="ion-cfb-col">
+        <!-- ion-input Text field controller -->
+        <ng-container *ngIf="field.formFieldType === 'ion-input' || field.formFieldType === undefined">
+          <ion-item class="ion-cfb-input-item">
+            <ion-icon class="ion-cfb-input-icon" slot="start" name="{{ field.icon }}" color="{{iconColor ? iconColor : 'primary'}}" *ngIf="showIcons"></ion-icon>
+            <ion-label class="ion-cfb-input-label" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+              field.title }}
+            </ion-label>
+            <ion-input class="ion-cfb-ion-input" *ngIf="field?.placeholder"  placeholder="{{field?.placeholder}}" type="{{ field.type }}"
+              formControlName="{{ field.formControlName }}">
+            </ion-input>
+            <ion-input class="ion-cfb-ion-input" *ngIf="field?.placeholder === undefined"  type="{{ field.type }}"
+              formControlName="{{ field.formControlName }}">
+            </ion-input>
+          </ion-item>
+          <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
+            <ng-container *ngFor="let validation of field?.validationMessages">
+              <div *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
+                <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
 
 
-      <!-- Credit card field controller -->
-      <ng-container *ngIf="field.formFieldType === 'credit-card'">
-        <ion-item>
-          <div *ngIf="showCardIcons" slot="start" [ngStyle]="createCardIcon(creditCardImg)"></div>
-          <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
-            field.title }}
-          </ion-label>
-          <ion-input *ngIf="field?.placeholder"  placeholder="{{field?.placeholder}}" type="{{ field.type }}"
-            formControlName="{{ field.formControlName }}">
-          </ion-input>
-          <ion-input *ngIf="field?.placeholder === undefined"  type="{{ field.type }}"
-            formControlName="{{ field.formControlName }}">
-          </ion-input>
-        </ion-item>
-        <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
-          <ng-container *ngFor="let validation of field?.validationMessages">
-            <div
-              *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
-              <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
+        <!-- Credit card field controller -->
+        <ng-container *ngIf="field.formFieldType === 'credit-card'">
+          <ion-item class="ion-cfb-input-item">
+            <div *ngIf="showCardIcons" slot="start" [ngStyle]="createCardIcon(creditCardImg)"></div>
+            <ion-label class="ion-cfb-input-label" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+              field.title }}
+            </ion-label>
+            <ion-input class="ion-cfb-ion-input" *ngIf="field?.placeholder"  placeholder="{{field?.placeholder}}" type="{{ field.type }}"
+              formControlName="{{ field.formControlName }}">
+            </ion-input>
+            <ion-input class="ion-cfb-ion-input" *ngIf="field?.placeholder === undefined"  type="{{ field.type }}"
+              formControlName="{{ field.formControlName }}">
+            </ion-input>
+          </ion-item>
+          <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
+            <ng-container *ngFor="let validation of field?.validationMessages">
+              <div *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
+                <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
 
-      <!-- Text Area Controller -->
-      <ng-container *ngIf="field.formFieldType === 'ion-textarea'">
-        <ion-item >
-          <ion-label position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
-            field.title }}
-          </ion-label>
-          <ion-textarea *ngIf="field?.placeholder"  rows="{{ field?.textAreaRowCount }}"
-            formControlName="{{ field.formControlName }}" placeholder="{{field?.placeholder}}"></ion-textarea>
-          <ion-textarea *ngIf="field?.placeholder === undefined"  rows="{{ field?.textAreaRowCount }}"
-            formControlName="{{ field.formControlName }}">
-          </ion-textarea>
-        </ion-item>
-        <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
-          <ng-container *ngFor="let validation of field?.validationMessages">
-            <div
-              *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
-              <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
-            </div>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ion-col>
-  </ion-row>
+        <!-- Text Area Controller -->
+        <ng-container *ngIf="field.formFieldType === 'ion-textarea'">
+          <ion-item class="ion-cfb-textarea-item">
+            <ion-label class="ion-cfb-textarea-label" position="{{field?.labelPosition ? field?.labelPosition : 'floating'}}" *ngIf="showLabels">{{
+              field.title }}
+            </ion-label>
+            <ion-textarea class="ion-cfb-ion-textarea" *ngIf="field?.placeholder"  rows="{{ field?.textAreaRowCount }}"
+              formControlName="{{ field.formControlName }}" placeholder="{{field?.placeholder}}"></ion-textarea>
+            <ion-textarea class="ion-cfb-ion-textarea" *ngIf="field?.placeholder === undefined"  rows="{{ field?.textAreaRowCount }}"
+              formControlName="{{ field.formControlName }}">
+            </ion-textarea>
+          </ion-item>
+          <div class="ion-cfb-validation-messages" *ngIf="field?.validationMessages">
+            <ng-container *ngFor="let validation of field?.validationMessages">
+              <div *ngIf="getFormControlByName(field.formControlName).hasError(validation.type) &&(getFormControlByName(field.formControlName).dirty || getFormControlByName(field.formControlName).touched)">
+                <ion-text color="danger"><small>{{ validation.message }}</small></ion-text>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
 
   <!-- Submit Button -->
-  <ion-row >
-    <ion-col>
-      <ion-button expand="block" color="{{submitButtonColor ? submitButtonColor : 'primary'}}" type="submit">
+  <ion-row *ngIf="showSubmitButton" class="ion-cfb-submit-btn-row">
+    <ion-col class="ion-cfb-submit-btn-col">
+      <ion-button  class="ion-cfb-submit-btn" expand="block" color="{{submitButtonColor ? submitButtonColor : 'primary'}}" type="submit">
       {{ submitButtonText }}
       </ion-button>
     </ion-col>

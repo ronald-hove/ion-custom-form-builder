@@ -9,10 +9,10 @@ This is an ionic-angular component library for building forms with the highlight
 ![npm](https://img.shields.io/npm/dw/ion-custom-form-builder)
 
 Features (Current Version)
-  - [Email Validation](#usage-example)
+  - [Email Validation](#Usage-example-output)
   - [Password Validation](#working-with-passwords)
   - [Credit Card Validation (With support for detecting card type)](#credit-card-validation)
-  - [Set errors to specific fields](#Set-errors-to-specific-fields)
+  - [Implement Your Own Submit Button](#Implement-your-own-submit-button)
   - Ionic form field types included
     - ion-input
     - ion-textarea
@@ -23,6 +23,9 @@ Features (Current Version)
     - ion-toggle (coming-soon)
     - ion-range (coming-soon)
   - Use Official Ionic Icons
+  - [Set errors to specific fields](#Set-errors-to-specific-fields) (in-development)
+  - [Css Styling](#Css-styling) (in-development)
+
 
 Upcoming Features
   - Credit Card Expiration Validation
@@ -70,7 +73,7 @@ Now in your *.page.html file add
   <ion-custom-form-builder
     [formFields]="fields"
     [submitButtonText]="'Login'"
-    (formSubmission)="submitForm($event)"
+    (formSubmission)="onIonCfbFormSubmission($event)"
   >
   </ion-custom-form-builder>
 ...
@@ -122,7 +125,7 @@ Head over to your  *.page.ts file and add
     ];
   }
 
-  submitForm(formData) {
+  onIonCfbFormSubmission(formData) {
     console.log('FORM_DATA=,', formData);
   }
 
@@ -250,7 +253,7 @@ export interface ValidationMessage {
 
 # Css Styling
 
-TODO: update styling docs
+- In Development
 
 # **Advanced Features**
 
@@ -433,46 +436,64 @@ Serve your app again to see the changes
 
 # Set Errors to Specific Fields
 
-<h2>Scenario</h2>
+- In Development
 
-Say you are working on a login form and you want to set errors to your form fields when the user has entered the incorrect credentials
+# Implement Your Own Submit Button
 
+You are able to implement your own submit button in case you want content in-between your form and submit button
+
+In your *.page.html file where you put the ion-custom-form-builder component ..
 
 ```html
 ...
+<ion-content>
   <ion-custom-form-builder
-    [formFields]="loginForm"
-    [submitButtonText]="'Login'"
-    (formSubmission)="onLogin($event)"
-  >
+    [formFields]="fields"
+    [showSubmitButton]="false"
+    (formSubmission)="onIonCfbFormSubmission($event)">
   </ion-custom-form-builder>
+  ...
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" color="primary" (click)="onClickMyOwnSubmitButton()">
+        Submit
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
 ...
 ```
 
+Then in your *.page.ts file import the IonCustomFormBuilderService..
+
 ```ts
-...
-  loginForm: FormField[] = [];
-...
+  ...
+  import { IonCustomFormBuilderService } from 'ion-custom-form-builder';
+  ...
 
   constructor(
-    private api: HttpServiceProvider,
+    private ionCfbService: IonCustomFormBuilderService
   ) {
-    this.loginForm = [
-      {
-        icon: 'mail',
-        type: 'email',
-        title: 'Email',
-        formControlName: 'email',
-        validators: [Validators.required, Validators.email]
-      },
-      {
-        icon: 'lock-closed',
-        type: 'password',
-        title: 'Password',
-        formControlName: 'password',
-        validators: [Validators.required]
-      }
-    ];
+  ...
   }
-...
+
+  ...
+
+  /**
+   * Triggered by the form submission event
+   *
+   * @param {*} formData
+   */
+  onIonCfbFormSubmission(formData) {
+    console.log('FORM_DATA=,', formData);
+  }
+
+  /**
+   * Trigger form submission using IonCustomFormBuilderService
+   *
+   */
+  onClickMyOwnSubmitButton() {
+    this.ionCfbService.triggerFormSubmission$.next(true)
+  }
+  ...
 ```

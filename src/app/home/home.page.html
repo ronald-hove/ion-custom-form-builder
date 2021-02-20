@@ -8,12 +8,20 @@
 
 <ion-content>
   <ion-custom-form-builder
+    [showSubmitButton]="false"
     [showCardIcons]="true"
     [formFields]="fields"
     [submitButtonText]="'Submit'"
     [showIcons]="false"
     [returnCreditCardType]="true"
-    (formSubmission)="submitForm($event)"
-  >
+    (formSubmission)="onIonCfbFormSubmission($event)">
   </ion-custom-form-builder>
+
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" color="primary" (click)="onClickMyOwnSubmitButton()">
+        Submit
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>

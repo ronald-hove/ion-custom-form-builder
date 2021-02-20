@@ -75,6 +75,14 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
   /**
    *
    *
+   * @type {boolean}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  @Input() showSubmitButton: boolean = true;
+
+  /**
+   *
+   *
    * @memberof IonCustomFormBuilderComponent
    */
   @Input() submitButtonText  = 'Submit';
