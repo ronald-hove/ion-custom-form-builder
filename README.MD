@@ -33,6 +33,7 @@ Upcoming Features
   - File Input
 
 Docs
+  - [Examples](https://github.com/ronald-hove/icfb-examples)
   - [FormField Model](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/form-field-model.md)
   - [Component Inputs](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/component-inputs.md)
   - [Component Outputs](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/component-outputs.md)
