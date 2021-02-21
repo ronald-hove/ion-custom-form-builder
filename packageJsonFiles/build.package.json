@@ -1,6 +1,6 @@
 {
     "name": "ion-custom-form-builder",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "author": "Ronald Hove",
     "homepage": "https://github.com/ronald-hove/ion-custom-form-builder",
     "license": "MIT",
@@ -39,5 +39,5 @@
     },
     "devDependencies": {
     },
-    "description": "A Custom Form Builder For Ionic 4"
+    "description": "A Custom Form Builder For Ionic"
   }
