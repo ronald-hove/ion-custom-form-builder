@@ -18,19 +18,11 @@ Features (Current Version)
     - ion-textarea
   - Use Official Ionic Icons
 
-Upcoming Features
-  - Set errors to specific fields
-  - Css Styling
-  - Additional FormFieldTypes
-    - ion-datetime
-    - ion-select
-    - ion-checkbox
-    - ion-radio
-    - ion-toggle
-    - ion-range
-  - Credit Card Expiration Validation
-  - Date Validation
-  - File Input
+|    |    |
+| -- | -- |
+| [Upcoming Features](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/upcoming-features.md) | [Changelog](https://github.com/ronald-hove/ion-custom-form-builder/blob/master/docs/changelog.md) |
+
+
 
 Docs
   - [Examples App](https://github.com/ronald-hove/icfb-examples)
