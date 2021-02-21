@@ -24,6 +24,13 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
    */
   creditCardInputSubscription: Subscription
 
+  /**
+   *
+   *
+   * @type {Subscription}
+   * @memberof IonCustomFormBuilderComponent
+   */
+  submissionTriggerSubscription: Subscription;
 
   /**
    *
@@ -149,21 +156,23 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildFormControlsConfig();
-    this.customForm = this.formBuilder.group(this.formControls);
-    this.prePopulateForm();
     this.watchCreditCardInput();
-    this.formBuilt = true;
     this.watchFormSubmissionTriggerByService();
   }
 
 
 
   ngOnDestroy() {
-    this.creditCardInputSubscription.unsubscribe();
+    if (this.creditCardInputSubscription) {
+      this.creditCardInputSubscription.unsubscribe();
+    }
+    if(this.submissionTriggerSubscription) {
+      this.submissionTriggerSubscription.unsubscribe();
+    }
   }
 
    /**
-   *
+   * Creates credit card icon css
    *
    * @param {*} icon
    * @return {*}
@@ -182,7 +191,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
 
 
   /**
-   *
+   * Event handler for submit button clicked
    *
    * @memberof IonCustomFormBuilderComponent
    */
@@ -206,7 +215,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * Builds the formControls configuration
    *
    * @private
    * @memberof IonCustomFormBuilderComponent
@@ -241,10 +250,14 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
           break;
       }
     });
+
+    this.customForm = this.formBuilder.group(this.formControls);
+    this.prePopulateForm();
+    this.formBuilt = true;
   }
 
   /**
-   *
+   * Binds abstractControls to asyncValidator functions
    *
    * @private
    * @param {FormField} element
@@ -260,13 +273,13 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * Creates Subscription to watch form submission triggered by service
    *
    * @private
    * @memberof IonCustomFormBuilderComponent
    */
   private watchFormSubmissionTriggerByService() {
-    this.ionCustomFormBuilderService.triggerFormSubmission$.subscribe( trigger => {
+    this.submissionTriggerSubscription = this.ionCustomFormBuilderService.triggerFormSubmission$.subscribe( trigger => {
       if (trigger) {
         this.onSubmit();
       }
@@ -274,7 +287,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   *
+   * Creates a subscription to watch credit-card input valueChanges
    *
    * @private
    * @memberof IonCustomFormBuilderComponent
@@ -291,7 +304,7 @@ export class IonCustomFormBuilderComponent implements OnInit, OnDestroy {
 
 
   /**
-   *
+   * Validates the credit card number
    *
    * @private
    * @param {AbstractControl} control
