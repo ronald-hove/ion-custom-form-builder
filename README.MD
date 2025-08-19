@@ -1,3 +1,17 @@
+⚠️ DEPRECATED - NO LONGER MAINTAINED
+
+This library is deprecated and no longer maintained. This repository has been marked as read-only and will receive no further updates, bug fixes, or security patches.
+Last maintained: August 19, 2025
+Reason for deprecation: Angular and Ionic versions have had significant breaking changes since the last update, making this library incompatible with current versions
+⚡ Recommendations for existing users:
+
+For new projects: Do not use this library
+For existing projects: Consider migrating to [alternative library/solution] or maintaining your own fork
+Security: Be aware that security vulnerabilities will not be patched
+
+---
+
+
 # Ionic Custom Form Builder
 
 This is an ionic-angular component library to simplify and eliminate some redundancies of building forms when developing ionic apps.
